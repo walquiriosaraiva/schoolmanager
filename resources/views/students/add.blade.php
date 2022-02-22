@@ -153,6 +153,14 @@
                                 <div class="row mt-4 g-3">
                                     <h6>Parents' Information</h6>
                                     <div class="col-md-3">
+                                        <label for="cpf_or_passport" class="form-label">CPF or passport<sup><i
+                                                    class="bi bi-asterisk text-primary"></i></sup></label>
+                                        <input type="text" class="form-control" id="cpf_or_passport"
+                                               name="cpf_or_passport"
+                                               placeholder="CPF or passport" required
+                                               value="{{old('cpf_or_passport')}}">
+                                    </div>
+                                    <div class="col-md-4">
                                         <label for="inputFatherName" class="form-label">Father Name<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
                                         <input type="text" class="form-control" id="inputFatherName" name="father_name"
@@ -165,7 +173,7 @@
                                                name="father_phone" placeholder="+880 01......" required
                                                value="{{old('father_phone')}}">
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <label for="inputMotherName" class="form-label">Mother Name<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
                                         <input type="text" class="form-control" id="inputMotherName" name="mother_name"
