@@ -17,6 +17,7 @@ use App\Http\Controllers\SyllabusController;
 use App\Http\Controllers\GradeRuleController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\BankReturnDataController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\SchoolClassController;
@@ -150,6 +151,12 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/payment/{id}', [PaymentController::class, 'update'])->name('payment.update');
     Route::post('/payment/payment', [PaymentController::class, 'store'])->name('payment.store');
     Route::post('/payment/students', [PaymentController::class, 'findStudent'])->name('payment.student.show');
+    Route::post('/payment/confirm', [PaymentController::class, 'paymentConfirm'])->name('payment.confirm');
+
+    // Bank return data
+    Route::get('bank-return-data/index', [BankReturnDataController::class, 'index'])->name('bank-return-data.index');
+    Route::get('bank-return-data/create', [BankReturnDataController::class, 'create'])->name('bank-return-data.create');
+    Route::post('bank-return-data', [BankReturnDataController::class, 'store'])->name('bank-return-data.store');
 
     // Academic settings
     Route::get('/academics/settings', [AcademicSettingController::class, 'index']);

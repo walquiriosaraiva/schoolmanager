@@ -111,6 +111,19 @@
                                         </select>
                                     </div>
 
+                                    <div class="col-md-4">
+                                        <label for="status_payment" class="form-label">Payment bank data<sup><i
+                                                    class="bi bi-asterisk text-primary"></i></sup></label>
+                                        <select class="form-select"
+                                                id="bank_return_data_id" name="bank_return_data_id">
+                                            <option value="">--select--</option>
+                                            @foreach ($bankRetornData as $data)
+                                                <option
+                                                    value="{{$data->id}}">{{$data->nome_do_sacado . ' - '. $data->valor_principal .' - '. $data->data_de_ocorrencia->format('d/m/Y')}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col-12-md">

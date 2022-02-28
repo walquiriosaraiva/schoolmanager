@@ -73,7 +73,7 @@
                                                 id="type_of_payment" name="type_of_payment">
                                             <option value="">Please select a type of payment</option>
                                             <option value="Down payment">Down payment</option>
-                                            <option value="Down payment">Automatic payment</option>
+                                            <option value="Automatic payment">Automatic payment</option>
                                         </select>
                                     </div>
 

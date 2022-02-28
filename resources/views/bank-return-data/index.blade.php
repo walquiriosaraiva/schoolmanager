@@ -8,10 +8,10 @@
                 <div class="row pt-2">
                     <div class="col ps-4">
                         <h1 class="display-6 mb-3">
-                            <i class="bi bi-sort-numeric-up-alt"></i> Payment
+                            <i class="bi bi-sort-numeric-up-alt"></i> Bank return data
                         </h1>
                         <h6>
-                            <a href="{{ route('payment.create')}}"
+                            <a href="{{ route('bank-return-data.create')}}"
                                class="btn btn-primary btn-sm">New</a>
                         </h6>
                         <h6>
@@ -26,44 +26,27 @@
                                     {{ session('error') }}
                                 </div>
                             @endif
-                            @csrf
                         </h6>
                         <div class="mb-4 mt-4">
-                            <table class="table mt-4" id="tablePayment">
+                            <table class="table mt-4">
                                 <thead>
                                 <tr>
-                                    <th scope="col">Student</th>
-                                    <th scope="col">Due date</th>
-                                    <th scope="col">Tuition</th>
-                                    <th scope="col">SDF</th>
-                                    <th scope="col">Hot lunch</th>
-                                    <th scope="col">Enrollment</th>
-                                    <th scope="col">Type of payment</th>
-                                    <th scope="col">Status payment</th>
-                                    <th scope="col">Percentage discount</th>
-                                    <th scope="col">Actions</th>
+                                    <th scope="col">Our number</th>
+                                    <th scope="col">Value</th>
+                                    <th scope="col">Date of occurrence</th>
+                                    <th scope="col">Wallet</th>
+                                    <th scope="col">Upload Date</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @isset($result)
                                     @foreach ($result as $object)
                                         <tr>
-                                            <td>{{$object->first_name . ' ' . $object->last_name}}</td>
-                                            <td>{{$object->due_date->format('d/m/Y')}}</td>
-                                            <td>{{$object->tuition}}</td>
-                                            <td>{{$object->sdf}}</td>
-                                            <td>{{$object->hot_lunch}}</td>
-                                            <td>{{$object->enrollment}}</td>
-                                            <td>{{$object->type_of_payment}}</td>
-                                            <td>{{$object->status_payment}}</td>
-                                            <td>{{$object->percentage_discount}}</td>
-                                            <td>
-                                                <div class="btn-group" role="group">
-                                                    <a href="{{route('payment.edit', ['id' => $object->id])}}"
-                                                       role="button" class="btn btn-sm btn-outline-primary"><i
-                                                            class="bi bi-sort-numeric-up-alt"></i>Edit</a>
-                                                </div>
-                                            </td>
+                                            <td>{{$object->nosso_numero}}</td>
+                                            <td>{{$object->valor_principal}}</td>
+                                            <td>{{$object->data_de_ocorrencia->format('d/m/Y')}}</td>
+                                            <td>{{$object->carteira}}</td>
+                                            <td>{{$object->created_at->format('d/m/Y')}}</td>
                                         </tr>
                                     @endforeach
                                 @endisset
@@ -80,21 +63,6 @@
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous"></script>
     <script>
-
-        function confirmPayment(object) {
-            var ids = $(this).val();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                url: "{{ route('payment.confirm') }}",
-                method: "POST",
-                data: {ids: ids, _token: _token},
-                success: function (data) {
-                    window.location.reload();
-                }
-            });
-        }
-
-
         $(document).ready(function () {
 
             $("#student").blur(function () {
@@ -111,6 +79,7 @@
                 });
 
             });
+
 
         });
     </script>

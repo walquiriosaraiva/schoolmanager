@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BankReturnData;
 use App\Models\Payment;
+use App\Models\PaymentConfirmEstudent;
 use App\Models\Promotion;
 use App\Models\User;
 use Carbon\Carbon;
@@ -39,22 +41,6 @@ class PaymentController extends Controller
     public function index(Request $request)
     {
 
-        /*
-        $cnabFactory = new Factory();
-        $arquivo = $cnabFactory->createRetorno('cnab/news/itau.ret');
-        $detalhes = $arquivo->listDetalhes();
-
-        foreach ($detalhes as $detalhe) {
-            if ($detalhe->getValorRecebido() > 0) {
-                $nossoNumero = $detalhe->getNossoNumero();
-                $valorRecebido = $detalhe->getValorRecebido();
-                $dataPagamento = $detalhe->getDataOcorrencia();
-                $carteira = $detalhe->getCarteira();
-                dd($nossoNumero, $valorRecebido, $dataPagamento, $carteira);
-            }
-        }
-        */
-
         $result = Payment::where('payment.id', '!=', 0)
             ->select(
                 'users.first_name',
@@ -69,9 +55,12 @@ class PaymentController extends Controller
                 'payment.enrollment',
                 'payment.type_of_payment',
                 'payment.status_payment',
-                'payment.percentage_discount'
+                'payment.percentage_discount',
+                'student_parent_infos.father_name',
+                'student_parent_infos.mother_name'
             )
             ->join('users', 'payment.student_id', '=', 'users.id')
+            ->join('student_parent_infos', 'student_parent_infos.student_id', '=', 'users.id')
             ->orderBy('users.id')
             ->orderBy('payment.due_date')
             ->get();
@@ -89,6 +78,13 @@ class PaymentController extends Controller
         return response()->json($student);
     }
 
+    public function paymentConfirm(Request $request)
+    {
+        $payment = [];
+
+        return response()->json($payment);
+    }
+
     public function create(Request $request)
     {
         $students = User::where('role', '=', 'student')->get();
@@ -99,18 +95,18 @@ class PaymentController extends Controller
         }
 
         $months = array(
-            1 => '1 mês',
-            2 => '2 meses',
-            3 => '3 meses',
-            4 => '4 meses',
-            5 => '5 meses',
-            6 => '6 meses',
-            7 => '7 meses',
-            8 => '8 meses',
-            9 => '9 meses',
-            10 => '10 meses',
-            11 => '11 meses',
-            12 => '12 meses'
+            1 => '1 month',
+            2 => '2 months',
+            3 => '3 months',
+            4 => '4 months',
+            5 => '5 months',
+            6 => '6 months',
+            7 => '7 months',
+            8 => '8 months',
+            9 => '9 months',
+            10 => '10 months',
+            11 => '11 months',
+            12 => '12 months'
         );
 
         return view('payment.payment', compact('students', 'payment', 'months'));
@@ -120,7 +116,6 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
         $storeData['student_id'] = $request->get('student_id');
-        $storeData['tuition'] = $request->get('tuition');
         $storeData['sdf'] = $request->get('sdf');
         $storeData['hot_lunch'] = $request->get('hot_lunch');
         $storeData['enrollment'] = $request->get('enrollment');
@@ -155,8 +150,9 @@ class PaymentController extends Controller
     {
         $students = User::where('role', '=', 'student')->get();
         $payment = Payment::where('id', '=', $id)->first();
+        $bankRetornData = BankReturnData::all();
 
-        return view('payment.edit', compact('students', 'payment'));
+        return view('payment.edit', compact('students', 'payment', 'bankRetornData'));
     }
 
 
@@ -172,8 +168,22 @@ class PaymentController extends Controller
         $updateData['type_of_payment'] = $request->get('type_of_payment');
         $updateData['status_payment'] = $request->get('status_payment');
 
+
         try {
+            if ($request->get('bank_return_data_id')) {
+                $paymentConfirmEstudent['bank_return_data_id'] = $request->get('bank_return_data_id');
+                $paymentConfirmEstudent['student_id'] = $id;
+                PaymentConfirmEstudent::create($paymentConfirmEstudent);
+
+                $updateData['type_of_payment'] = 'Automatic payment';
+                $updateData['status_payment'] = 'Confirmado';
+                $updateData['updated_at'] = Carbon::now();
+
+            }
+
             Payment::whereId($id)->update($updateData);
+
+
             return redirect()->route('payment.index')
                 ->withInput()
                 ->with(['success' => 'success']);
@@ -183,6 +193,13 @@ class PaymentController extends Controller
                 ->with(['error' => 'error: ' . $e->getMessage()]);
         }
 
+    }
+
+    public function prepareData(Request $request)
+    {
+        $storeData['tuition'] = $request->get('tuition');
+
+        return true;
     }
 
     public function show(Promotion $promotion)

@@ -198,6 +198,12 @@
             </li>
             @if (Auth::user()->role == "admin")
                 <li class="nav-item">
+                    <a class="nav-link {{ request()->is('bank-return-data*')? 'active' : '' }}"
+                       href="{{url('bank-return-data/index')}}"
+                       aria-disabled="true"><i class="bi bi-currency-exchange"></i> <span
+                            class="ms-1 d-inline d-sm-none d-md-none d-xl-inline">Bank return data</span></a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link disabled" href="#" aria-disabled="true"><i class="bi bi-person-lines-fill"></i>
                         <span class="ms-1 d-inline d-sm-none d-md-none d-xl-inline">Staff</span></a>
                 </li>
