@@ -17,7 +17,7 @@
                                 <div class="row g-3">
 
                                     <div class="col-md-6">
-                                        <label for="due_date" class="form-label">File upload bank return
+                                        <label for="file" class="form-label">File upload bank return
                                             data<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
                                         <input type="file" name="file" class="form-control" id="file">

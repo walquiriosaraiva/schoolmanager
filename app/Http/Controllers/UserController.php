@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\BankReturnData;
+use Carbon\Carbon;
+use Cnab\Factory;
 use Illuminate\Http\Request;
 use App\Traits\SchoolSession;
 use App\Interfaces\UserInterface;
@@ -13,6 +16,7 @@ use App\Http\Requests\StudentStoreRequest;
 use App\Http\Requests\TeacherStoreRequest;
 use App\Interfaces\SchoolSessionInterface;
 use App\Repositories\StudentParentInfoRepository;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -154,6 +158,20 @@ class UserController extends Controller
     public function updateStudent(Request $request)
     {
         try {
+
+            if ($request->file()) {
+                $dataFile = $request->file();
+                if (isset($dataFile['contract']) && $dataFile['contract']) {
+                    $contract = $dataFile['contract']->getClientOriginalName();
+                    Storage::put('stutend/' . $request->get('student_id') . '/' . 'contract.' . pathinfo($contract, PATHINFO_EXTENSION), $request->file('contract')->getContent());
+                }
+
+                if (isset($dataFile['ticket']) && $dataFile['ticket']) {
+                    $ticket = $dataFile['ticket']->getClientOriginalName();
+                    Storage::put('stutend/' . $request->get('student_id') . '/' . 'ticket.' . pathinfo($ticket, PATHINFO_EXTENSION), $request->file('ticket')->getContent());
+                }
+            }
+
             $this->userRepository->updateStudent($request->toArray());
 
             return back()->with('status', 'Student update was successful!');

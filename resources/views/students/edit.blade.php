@@ -20,7 +20,8 @@
 
                         @include('session-messages')
                         <div class="mb-4">
-                            <form class="row g-3" action="{{route('school.student.update')}}" method="POST">
+                            <form class="row g-3" action="{{route('school.student.update')}}" method="POST"
+                                  enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="student_id" value="{{$student->id}}">
                                 <div class="row g-3">
@@ -191,6 +192,19 @@
                                                name="parent_address" placeholder="634 Main St" required
                                                value="{{$parent_info->parent_address}}">
                                     </div>
+
+                                    <div class="col-md-6">
+                                        <label for="contract" class="form-label">File upload contract
+                                            data</label>
+                                        <input type="file" name="contract" class="form-control" id="contract">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="ticket" class="form-label">File upload ticket
+                                            data</label>
+                                        <input type="file" name="ticket" class="form-control" id="ticket">
+                                    </div>
+
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col-12">

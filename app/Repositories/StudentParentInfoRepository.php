@@ -16,7 +16,7 @@ class StudentParentInfoRepository
                 'mother_name' => $request['mother_name'],
                 'mother_phone' => $request['mother_phone'],
                 'parent_address' => $request['parent_address'],
-                'cpf_or_passport' => $request['cpf_or_passport'],
+                'cpf_or_passport' => isset($request['cpf_or_passport']) ? $request['cpf_or_passport'] : ''
             ]);
         } catch (\Exception $e) {
             throw new \Exception('Failed to create Student Parent information. ' . $e->getMessage());
@@ -38,7 +38,7 @@ class StudentParentInfoRepository
                 'mother_name' => $request['mother_name'],
                 'mother_phone' => $request['mother_phone'],
                 'parent_address' => $request['parent_address'],
-                'cpf_or_passport' => $request['cpf_or_passport'],
+                'cpf_or_passport' => isset($request['cpf_or_passport']) ? $request['cpf_or_passport'] : '',
             ]);
         } catch (\Exception $e) {
             throw new \Exception('Failed to update Student Parent information. ' . $e->getMessage());
