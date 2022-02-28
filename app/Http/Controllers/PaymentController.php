@@ -6,6 +6,7 @@ use App\Models\BankReturnData;
 use App\Models\Payment;
 use App\Models\PaymentConfirmEstudent;
 use App\Models\Promotion;
+use App\Models\StudentParentInfo;
 use App\Models\User;
 use Carbon\Carbon;
 use Cnab\Factory;
@@ -150,9 +151,10 @@ class PaymentController extends Controller
     {
         $students = User::where('role', '=', 'student')->get();
         $payment = Payment::where('id', '=', $id)->first();
+        $studentsParents = StudentParentInfo::where('student_id', '=', $payment->student_id)->first();
         $bankRetornData = BankReturnData::all();
 
-        return view('payment.edit', compact('students', 'payment', 'bankRetornData'));
+        return view('payment.edit', compact('students', 'payment', 'bankRetornData', 'studentsParents'));
     }
 
 

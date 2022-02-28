@@ -124,6 +124,13 @@
                                         </select>
                                     </div>
 
+                                    <div class="col-md-4">
+                                        <label class="form-label">Parents</label>
+                                        <input type="text" class="form-control" id="parent"
+                                               name="parent" disabled
+                                               value="{{$studentsParents->father_name, ' - ', $studentsParents->mother_name}}">
+                                    </div>
+
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col-12-md">
