@@ -112,8 +112,7 @@
                                     </div>
 
                                     <div class="col-md-4">
-                                        <label for="status_payment" class="form-label">Payment bank data<sup><i
-                                                    class="bi bi-asterisk text-primary"></i></sup></label>
+                                        <label for="bank_return_data_id" class="form-label">Payment bank data</label>
                                         <select class="form-select"
                                                 id="bank_return_data_id" name="bank_return_data_id">
                                             <option value="">--select--</option>
