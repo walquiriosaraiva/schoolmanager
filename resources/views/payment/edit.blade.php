@@ -80,7 +80,7 @@
                                                 Down payment
                                             </option>
                                             <option
-                                                value="Automatic payment"{{ $payment->type_of_payment === 'Down payment' ? 'selected' : ''  }}>
+                                                value="Automatic payment"{{ $payment->type_of_payment === 'Automatic payment' ? 'selected' : ''  }}>
                                                 Automatic payment
                                             </option>
                                         </select>
@@ -117,7 +117,7 @@
                                         <select class="form-select"
                                                 id="bank_return_data_id" name="bank_return_data_id">
                                             <option value="">--select--</option>
-                                            @foreach ($bankRetornData as $data)
+                                            @foreach ($bankReturnData as $data)
                                                 <option
                                                     value="{{$data->id}}">{{$data->nome_do_sacado . ' - '. $data->valor_principal .' - '. $data->data_de_ocorrencia->format('d/m/Y')}}</option>
                                             @endforeach
@@ -126,9 +126,8 @@
 
                                     <div class="col-md-4">
                                         <label class="form-label">Parents</label>
-                                        <input type="text" class="form-control" id="parent"
-                                               name="parent" disabled
-                                               value="{{$studentsParents->father_name, ' - ', $studentsParents->mother_name}}">
+                                        <div><strong>Pai:</strong> {{$studentsParents->father_name}}
+                                            <br/><strong>Mae:</strong> {{$studentsParents->mother_name}}</div>
                                     </div>
 
                                 </div>

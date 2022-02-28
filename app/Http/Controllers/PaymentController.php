@@ -152,9 +152,9 @@ class PaymentController extends Controller
         $students = User::where('role', '=', 'student')->get();
         $payment = Payment::where('id', '=', $id)->first();
         $studentsParents = StudentParentInfo::where('student_id', '=', $payment->student_id)->first();
-        $bankRetornData = BankReturnData::all();
+        $bankReturnData = BankReturnData::all();
 
-        return view('payment.edit', compact('students', 'payment', 'bankRetornData', 'studentsParents'));
+        return view('payment.edit', compact('students', 'payment', 'bankReturnData', 'studentsParents'));
     }
 
 
@@ -173,18 +173,24 @@ class PaymentController extends Controller
 
         try {
             if ($request->get('bank_return_data_id')) {
-                $paymentConfirmEstudent['bank_return_data_id'] = $request->get('bank_return_data_id');
-                $paymentConfirmEstudent['student_id'] = $id;
-                PaymentConfirmEstudent::create($paymentConfirmEstudent);
+                $countRegister = PaymentConfirmEstudent::where('bank_return_data_id', '=', $request->get('bank_return_data_id'))
+                    ->where('student_id', '=', $request->get('student_id'))
+                    ->count();
+                if ($countRegister === 0) {
+                    $paymentConfirmEstudent['bank_return_data_id'] = $request->get('bank_return_data_id');
+                    $paymentConfirmEstudent['student_id'] = $request->get('student_id');
 
-                $updateData['type_of_payment'] = 'Automatic payment';
-                $updateData['status_payment'] = 'Confirmado';
+                    PaymentConfirmEstudent::create($paymentConfirmEstudent);
+
+                    $updateData['type_of_payment'] = 'Automatic payment';
+                    $updateData['status_payment'] = 'Confirmado';
+                }
+
                 $updateData['updated_at'] = Carbon::now();
 
             }
 
             Payment::whereId($id)->update($updateData);
-
 
             return redirect()->route('payment.index')
                 ->withInput()
