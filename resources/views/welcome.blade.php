@@ -6,12 +6,12 @@
 
     <title>Schoolmanager</title>
 
-    <link rel="shortcut icon" href="{{asset('favicon_io/favicon.ico')}}">
-    <link rel="shortcut icon" sizes="16x16" href="{{asset('favicon_io/favicon-16x16.png')}}">
-    <link rel="shortcut icon" sizes="32x32" href="{{asset('favicon_io/favicon-32x32.png')}}">
-    <link rel="apple-touch-icon" href="{{asset('favicon_io/apple-touch-icon.png')}}">
-    <link rel="icon" href="{{asset('favicon_io/android-chrome-192x192.png')}}" sizes="192x192">
-    <link rel="icon" href="{{asset('favicon_io/android-chrome-512x512.png')}}" sizes="512x512">
+    <link rel="shortcut icon" href="{{asset('favicon_school/favicon.ico')}}">
+    <link rel="shortcut icon" sizes="16x16" href="{{asset('favicon_school/favicon-16x16.png')}}">
+    <link rel="shortcut icon" sizes="32x32" href="{{asset('favicon_school/favicon-32x32.png')}}">
+    <link rel="apple-touch-icon" href="{{asset('favicon_school/apple-touch-icon.png')}}">
+    <link rel="icon" href="{{asset('favicon_school/android-chrome-192x192.png')}}" sizes="192x192">
+    <link rel="icon" href="{{asset('favicon_school/android-chrome-512x512.png')}}" sizes="512x512">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -419,9 +419,9 @@
 
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <div class="flex justify-center pt-8 sm:justify-start sm:pt-0" style="align-items: center;">
-            <h1 class="text-gray-900 dark:text-white"><img src="{{asset('favicon_io/android-chrome-512x512.png')}}"
+            <h1 class="text-gray-900 dark:text-white"><img src="{{asset('favicon_school/android-chrome-512x512.png')}}"
                                                            class="mr-2" height="50px" width="50px"><span
-                    style="font-size: 45px; color: #8a6dd9;">nifiedtransform</span> - <small>Powered by &nbsp;</small>
+                    style="font-size: 45px; color: #8a6dd9;">choolmanager</span> - <small>Powered by &nbsp;</small>
             </h1>
             <svg viewBox="0 0 651 192" fill="none" xmlns="http://www.w3.org/2000/svg"
                  class="h-16 w-auto text-gray-700 sm:h-20">
