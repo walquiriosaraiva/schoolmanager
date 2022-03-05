@@ -228,12 +228,6 @@
                                     <input type="hidden" name="session_id" value="{{$current_school_session_id}}">
 
                                     <div class="col-md-6">
-                                        <label for="contract" class="form-label">File upload contract
-                                            data</label>
-                                        <input type="file" name="contract" class="form-control" id="contract">
-                                    </div>
-
-                                    <div class="col-md-6">
                                         <label for="ticket" class="form-label">File upload ticket
                                             data</label>
                                         <input type="file" name="ticket" class="form-control" id="ticket">

@@ -31,7 +31,7 @@
                 Eu/nós somos financeiramente responsáveis por todas as mensalidades, taxas e encargos de acordo com a
                 política estabelecida neste contrato, que se aplicam à matrícula do(s) estudante(s) listado(s) abaixo.
                 Eu/nós entendemos que todas as referências neste contrato de mensalidade, Taxa de Desenvolvimento da
-                Escola (SDF – School Development Fund fee) e todas as outras taxas aplicáveis ​​(inclusive multas por
+                Escola (SDF – School Development Fund fee) e todas as outras taxas aplicáveis ​(inclusive multas por
                 atraso) se referem aos encargos estabelecidos pela Brasilia International School (BIS), a administração
                 e os órgãos de governo referente ao ano letivo de {{ $result->session_name }}. Eu/nós entendemos que é
                 minha/nossa a responsabilidade final de garantir que todas as obrigações financeiras sejam cumpridas
@@ -209,7 +209,7 @@
             </p>
         </div>
 
-        <div class="p-1" style="">
+        <div class="p-1" style="text-align: justify; font-size: 10px;">
             <ul>
                 <li>Para famílias com um plano de pagamento de 12 meses, essa taxa equivale à mensalidade de um (01) mês
                     após o último mês de matrícula, e é paga no momento da retirada.
