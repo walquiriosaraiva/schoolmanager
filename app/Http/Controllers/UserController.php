@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\BankReturnData;
-use Carbon\Carbon;
-use Cnab\Factory;
+use App\Models\Payment;
+use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use App\Traits\SchoolSession;
 use App\Interfaces\UserInterface;
@@ -161,19 +160,14 @@ class UserController extends Controller
 
             if ($request->file()) {
                 $dataFile = $request->file();
-                if (isset($dataFile['contract']) && $dataFile['contract']) {
-                    $contract = $dataFile['contract']->getClientOriginalName();
-                    Storage::put('stutend/' . $request->get('student_id') . '/' . 'contract.' . pathinfo($contract, PATHINFO_EXTENSION), $request->file('contract')->getContent());
-                }
-
                 if (isset($dataFile['ticket']) && $dataFile['ticket']) {
                     $ticket = $dataFile['ticket']->getClientOriginalName();
-                    Storage::put('stutend/' . $request->get('student_id') . '/' . 'ticket.' . pathinfo($ticket, PATHINFO_EXTENSION), $request->file('ticket')->getContent());
+                    Storage::put('student/' . $request->get('student_id') . '/pdf-ticket/' . 'ticket.' . pathinfo($ticket, PATHINFO_EXTENSION), $request->file('ticket')->getContent());
                 }
             }
 
             $this->userRepository->updateStudent($request->toArray());
-
+            $this->createPDF(['id' => $request->get('student_id')]);
             return back()->with('status', 'Student update was successful!');
         } catch (\Exception $e) {
             return back()->withError($e->getMessage());
@@ -211,5 +205,60 @@ class UserController extends Controller
         ];
 
         return view('teachers.list', $data);
+    }
+
+    public function createPDF($data)
+    {
+
+        $page_html = false;
+        $result = User::where('users.id', '=', $data['id'])
+            ->select(
+                'users.id',
+                'users.first_name',
+                'users.last_name',
+                'users.email',
+                'users.password',
+                'users.gender',
+                'users.nationality',
+                'users.phone',
+                'users.address',
+                'users.address2',
+                'users.city',
+                'users.zip',
+                'users.photo',
+                'users.birthday',
+                'users.religion',
+                'users.blood_type',
+                'users.role',
+                'promotions.student_id',
+                'promotions.class_id',
+                'promotions.section_id',
+                'promotions.session_id',
+                'promotions.id_card_number',
+                'school_sessions.session_name',
+                'student_parent_infos.cpf_or_passport',
+                'student_parent_infos.father_phone',
+                'student_parent_infos.mother_phone',
+                'student_parent_infos.father_name',
+                'student_parent_infos.mother_name'
+            )
+            ->join('promotions', 'promotions.student_id', '=', 'users.id')
+            ->join('school_sessions', 'promotions.session_id', '=', 'school_sessions.id')
+            ->join('student_parent_infos', 'users.id', '=', 'student_parent_infos.student_id')
+            ->first();
+
+        $payment = Payment::where('student_id', '=', $data['id'])->get();
+        $totalGeral = 0;
+        foreach ($payment as $value):
+            $value->total_geral_linha = number_format($value->tuition + $value->sdf + $value->hot_lunch + $value->enrollment, 2);
+            $totalGeral += $value->tuition + $value->sdf + $value->hot_lunch + $value->enrollment;
+        endforeach;
+
+        $pdf = PDF::loadView('payment.pdf_view', compact('result', 'page_html', 'payment', 'totalGeral'));
+
+        Storage::put('student/' . $data['id'] . '/pdf-contract/contract.pdf', $pdf->output());
+
+        return true;
+
     }
 }

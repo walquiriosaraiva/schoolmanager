@@ -194,15 +194,19 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label for="contract" class="form-label">File upload contract
-                                            data</label>
-                                        <input type="file" name="contract" class="form-control" id="contract">
-                                    </div>
-
-                                    <div class="col-md-6">
                                         <label for="ticket" class="form-label">File upload ticket
                                             data</label>
                                         <input type="file" name="ticket" class="form-control" id="ticket">
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <a href="{{ route('students.pdf-contract', ['id' => $student->id]) }}"
+                                           role="button" class="btn btn-sm btn-outline-info" download><i
+                                                class="bi bi-eye"></i> Download contract</a>
+
+                                        <a href="{{ route('students.pdf-ticket', ['id' => $student->id]) }}"
+                                           role="button" class="btn btn-sm btn-outline-warning" download><i
+                                                class="bi bi-eye"></i> Download ticket</a>
                                     </div>
 
                                 </div>

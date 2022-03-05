@@ -117,14 +117,9 @@ class UserRepository implements UserInterface
                     'view notices'
                 );
 
-                if (isset($request['contract']) && $request['contract']) {
-                    $contract = $request['contract']->getClientOriginalName();
-                    Storage::put('stutend/' . $student->id . '/' . 'contract.' . pathinfo($contract, PATHINFO_EXTENSION), $request['contract']->getContent());
-                }
-
                 if (isset($request['ticket']) && $request['ticket']) {
                     $ticket = $request['ticket']->getClientOriginalName();
-                    Storage::put('stutend/' . $student->id . '/' . 'ticket.' . pathinfo($ticket, PATHINFO_EXTENSION), $request['ticket']->getContent());
+                    Storage::put('student/' . $student->id . '/pdf-ticket/' . 'ticket.' . pathinfo($ticket, PATHINFO_EXTENSION), $request->file('ticket')->getContent());
                 }
 
             });

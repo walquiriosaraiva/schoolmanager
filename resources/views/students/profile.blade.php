@@ -141,6 +141,18 @@
                                             </tbody>
                                         </table>
                                     </div>
+
+                                    <div class="p-3 mb-3 border rounded bg-white">
+                                        <h6>Information contract and ticket</h6>
+                                        <a href="{{ route('students.pdf-contract', ['id' => $student->id]) }}"
+                                           role="button" class="btn btn-sm btn-outline-info" download><i
+                                                class="bi bi-eye"></i> Download contract</a>
+
+                                        <a href="{{ route('students.pdf-ticket', ['id' => $student->id]) }}"
+                                           role="button" class="btn btn-sm btn-outline-warning" download><i
+                                                class="bi bi-eye"></i> Download ticket</a>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>

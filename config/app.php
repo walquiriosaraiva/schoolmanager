@@ -183,6 +183,9 @@ return [
         App\Providers\CourseServiceProvider::class,
         App\Providers\UserServiceProvider::class,
         App\Providers\PurifySetupProvider::class,
+
+        Barryvdh\DomPDF\ServiceProvider::class,
+
     ],
 
     /*
@@ -236,6 +239,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
 
     ],
 

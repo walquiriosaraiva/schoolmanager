@@ -26,6 +26,8 @@ use App\Http\Controllers\SchoolSessionController;
 use App\Http\Controllers\AcademicSettingController;
 use App\Http\Controllers\AssignedTeacherController;
 use App\Http\Controllers\Auth\UpdatePasswordController;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -192,4 +194,39 @@ Route::middleware(['auth'])->group(function () {
     // Update password
     Route::get('password/edit', [UpdatePasswordController::class, 'edit'])->name('password.edit');
     Route::post('password/edit', [UpdatePasswordController::class, 'update'])->name('password.update');
+
+
+    // PDF
+    Route::get('/payment/pdf', [PaymentController::class, 'createPDF'])->name('payment.pdf');
+    Route::get('/payment/html', [PaymentController::class, 'viewHtml'])->name('payment.html');
+
+    // contrat student
+    Route::get('/students/pdf/{id}', [PaymentController::class, 'createPDF'])->name('payment.pdf');
+
+    Route::get('students/pdf-contract/{id}', function ($id) {
+        $image = Storage::disk('local')->allFiles("student/{$id}/pdf-contract");
+        $path = count($image) ? current($image) : "";
+        $response = null;
+
+        if (!empty($path)) {
+            $response = Response::make(Storage::get($path), 200);
+            $response->header('content-type', Storage::mimeType($path));
+        }
+
+        return $response;
+    })->name('students.pdf-contract');
+
+    Route::get('students/pdf-ticket/{id}', function ($id) {
+        $image = Storage::disk('local')->allFiles("student/{$id}/pdf-ticket");
+        $path = count($image) ? current($image) : "";
+        $response = null;
+
+        if (!empty($path)) {
+            $response = Response::make(Storage::get($path), 200);
+            $response->header('content-type', Storage::mimeType($path));
+        }
+
+        return $response;
+    })->name('students.pdf-ticket');
+
 });

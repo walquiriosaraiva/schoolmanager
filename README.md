@@ -117,6 +117,11 @@ With the improved Docker setup, you will get:
     :/# php artisan key:generate
     :/# php artisan config:cache
     :/# php artisan migrate:fresh --seed
+    :/# php artisan config:clear
+    :/# php artisan cache:clear
+    :/# composer dump-autoload
+    :/# php artisan view:clear
+    :/# php artisan route:clear
     ```
 
     Then exit from the container.
