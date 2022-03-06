@@ -73,14 +73,17 @@ class BankReturnDataController extends Controller
                 $dataCreate = [];
                 foreach ($detalhes as $detalhe) {
                     if ($detalhe->nosso_numero) {
-                        $date = Carbon::createFromFormat('dmy', $detalhe->data_de_ocorrencia)->format('Y-m-d');
-                        $data = Carbon::parse($date);
-                        $dataCreate['nosso_numero'] = $detalhe->nosso_numero;
-                        $dataCreate['valor_principal'] = $detalhe->valor_principal;
-                        $dataCreate['data_de_ocorrencia'] = $data;
-                        $dataCreate['carteira'] = $detalhe->carteira;
-                        $dataCreate['nome_do_sacado'] = $detalhe->nome_do_sacado;
-                        BankReturnData::create($dataCreate);
+                        $countNossoNumero = BankReturnData::where('nosso_numero', '=', $detalhe->nosso_numero)->count();
+                        if ($countNossoNumero === 0) {
+                            $date = Carbon::createFromFormat('dmy', $detalhe->data_de_ocorrencia)->format('Y-m-d');
+                            $data = Carbon::parse($date);
+                            $dataCreate['nosso_numero'] = $detalhe->nosso_numero;
+                            $dataCreate['valor_principal'] = $detalhe->valor_principal;
+                            $dataCreate['data_de_ocorrencia'] = $data;
+                            $dataCreate['carteira'] = $detalhe->carteira;
+                            $dataCreate['nome_do_sacado'] = $detalhe->nome_do_sacado;
+                            BankReturnData::create($dataCreate);
+                        }
                     }
                 }
 

@@ -256,10 +256,10 @@ class PaymentController extends Controller
 
     }
 
-    public function viewHtml()
+    public function viewHtml($id)
     {
         $page_html = true;
-        $result = User::where('users.id', '=', 17)
+        $result = User::where('users.id', '=', $id)
             ->select(
                 'users.id',
                 'users.first_name',
@@ -295,7 +295,7 @@ class PaymentController extends Controller
             ->join('student_parent_infos', 'users.id', '=', 'student_parent_infos.student_id')
             ->first();
 
-        $payment = Payment::where('student_id', '=', 17)->get();
+        $payment = Payment::where('student_id', '=', $id)->get();
         $totalGeral = 0;
         foreach ($payment as $value):
             $value->total_geral_linha = number_format($value->tuition + $value->sdf + $value->hot_lunch + $value->enrollment, 2);

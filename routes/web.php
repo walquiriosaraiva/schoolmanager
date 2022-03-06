@@ -198,7 +198,7 @@ Route::middleware(['auth'])->group(function () {
 
     // PDF
     Route::get('/payment/pdf', [PaymentController::class, 'createPDF'])->name('payment.pdf');
-    Route::get('/payment/html', [PaymentController::class, 'viewHtml'])->name('payment.html');
+    Route::get('/payment/html/{id}', [PaymentController::class, 'viewHtml'])->name('payment.html');
 
     // contrat student
     Route::get('/students/pdf/{id}', [PaymentController::class, 'createPDF'])->name('payment.pdf');

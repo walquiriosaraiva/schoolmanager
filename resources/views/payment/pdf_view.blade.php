@@ -209,7 +209,7 @@
             </p>
         </div>
 
-        <div class="p-1" style="">
+        <div class="p-1" style="text-align: justify; font-size: 10px;">
             <ul>
                 <li>Para famílias com um plano de pagamento de 12 meses, essa taxa equivale à mensalidade de um (01) mês
                     após o último mês de matrícula, e é paga no momento da retirada.
