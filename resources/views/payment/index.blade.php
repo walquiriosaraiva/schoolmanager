@@ -10,10 +10,12 @@
                         <h1 class="display-6 mb-3">
                             <i class="bi bi-sort-numeric-up-alt"></i> Payment
                         </h1>
-                        <h6>
-                            <a href="{{ route('payment.create')}}"
-                               class="btn btn-primary btn-sm">New</a>
-                        </h6>
+                        @if (Auth::user()->role == "admin")
+                            <h6>
+                                <a href="{{ route('payment.create')}}"
+                                   class="btn btn-primary btn-sm">New</a>
+                            </h6>
+                        @endif
                         <h6>
                             @if (session('success'))
                                 <div class="alert alert-success" role="alert">
@@ -41,7 +43,9 @@
                                     <th scope="col">Type of payment</th>
                                     <th scope="col">Status payment</th>
                                     <th scope="col">Percentage discount</th>
-                                    <th scope="col">Actions</th>
+                                    @if (Auth::user()->role == "admin")
+                                        <th scope="col">Actions</th>
+                                    @endif
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -57,13 +61,15 @@
                                             <td>{{$object->type_of_payment}}</td>
                                             <td>{{$object->status_payment}}</td>
                                             <td>{{$object->percentage_discount}}</td>
-                                            <td>
-                                                <div class="btn-group" role="group">
-                                                    <a href="{{route('payment.edit', ['id' => $object->id])}}"
-                                                       role="button" class="btn btn-sm btn-outline-primary"><i
-                                                            class="bi bi-sort-numeric-up-alt"></i>Edit</a>
-                                                </div>
-                                            </td>
+                                            @if (Auth::user()->role == "admin")
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <a href="{{route('payment.edit', ['id' => $object->id])}}"
+                                                           role="button" class="btn btn-sm btn-outline-primary"><i
+                                                                class="bi bi-sort-numeric-up-alt"></i>Edit</a>
+                                                    </div>
+                                                </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 @endisset
