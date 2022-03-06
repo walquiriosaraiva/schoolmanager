@@ -31,17 +31,18 @@
                 Eu/nós somos financeiramente responsáveis por todas as mensalidades, taxas e encargos de acordo com a
                 política estabelecida neste contrato, que se aplicam à matrícula do(s) estudante(s) listado(s) abaixo.
                 Eu/nós entendemos que todas as referências neste contrato de mensalidade, Taxa de Desenvolvimento da
-                Escola (SDF – School Development Fund fee) e todas as outras taxas aplicáveis ​​(inclusive multas por
+                Escola (SDF – School Development Fund fee) e todas as outras taxas aplicáveis (inclusive multas por
                 atraso) se referem aos encargos estabelecidos pela Brasilia International School (BIS), a administração
                 e os órgãos de governo referente ao ano letivo de {{ $result->session_name }}. Eu/nós entendemos que é
                 minha/nossa a responsabilidade final de garantir que todas as obrigações financeiras sejam cumpridas
-                dentro dos parâmetros deste contrato. Isso é independentemente de qualquer financiamento educacional
-                fornecido por fontes familiares independentes, de embaixadas, corporativas ou pessoais. Eu/nós
-                concordamos que qualquer inadimplemento em qualquer forma relacionada a este contrato resultará em que o
-                aluno não se torne elegível para rematrícula, e constituirá a utilização da cobrança de dívidas via
-                assessoria jurídica. Ao aceitar e assinar este contrato, eu/nós concordamos com os termos estabelecidos
-                no contrato e concordamos em pagar qualquer taxa associada à cobrança, custos legais, encargos atrasados
-                ​​ou outros custos que possam resultar do não pagamento da mensalidade e taxas.
+                dentro dos
+                parâmetros deste contrato. Isso é independentemente de qualquer financiamento educacional fornecido por
+                fontes familiares independentes, de embaixadas, corporativas ou pessoais. Eu/nós concordamos que
+                qualquer inadimplemento em qualquer forma relacionada a este contrato resultará em que o aluno não se
+                torne elegível para rematrícula, e constituirá a utilização da cobrança de dívidas via assessoria
+                jurídica. Ao aceitar e assinar este contrato, eu/nós concordamos com os termos estabelecidos no contrato
+                e concordamos em pagar qualquer taxa associada à cobrança, custos legais, encargos atrasados ou outros
+                custos que possam resultar do não pagamento da mensalidade e taxas.
                 Eu/nós entendemos que a BIS tem plenos direitos para descontinuar ou modificar os parâmetros deste
                 contrato em qualquer momento no melhor interesse da instituição ou para assegurar a viabilidade
                 financeira da escola.
