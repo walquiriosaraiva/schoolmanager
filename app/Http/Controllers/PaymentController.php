@@ -302,7 +302,7 @@ class PaymentController extends Controller
             $totalGeral += $value->tuition + $value->sdf + $value->hot_lunch + $value->enrollment;
         endforeach;
 
-        return view('payment.pdf_view', compact('result', 'page_html', 'payment', 'totalGeral'));
+        return view('students.pdf_view', compact('result', 'page_html', 'payment', 'totalGeral'));
     }
 
     public function prepareData(Request $request)
