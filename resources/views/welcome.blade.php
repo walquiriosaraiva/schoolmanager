@@ -402,7 +402,7 @@
 
     <!-- PWA  -->
     <meta name="theme-color" content="#6777ef"/>
-    <link rel="apple-touch-icon" href="{{ asset('icone-app.jpeg') }}">
+    <link rel="apple-touch-icon" href="{{ asset('icone-app.jpg') }}">
     <link rel="manifest" href="{{ asset('/manifest.json') }}">
 </head>
 <body class="antialiased">
