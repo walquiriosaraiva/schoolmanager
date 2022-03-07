@@ -11,7 +11,8 @@
                             <i class="bi bi-person-lines-fill"></i> Edit payment Students
                         </h1>
                         <div class="mb-4 mt-4">
-                            <form action="{{route('payment.update', $payment->id)}}" method="post">
+                            <form action="{{route('payment.update', $payment->id)}}" method="post"
+                                  enctype="multipart/form-data">
                                 @method('PUT')
                                 @csrf
                                 <div class="row g-3">
@@ -127,6 +128,12 @@
                                         <label class="form-label">Parents</label>
                                         <div><strong>Pai:</strong> {{$studentsParents->father_name}}
                                             <br/><strong>Mae:</strong> {{$studentsParents->mother_name}}</div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="ticket" class="form-label">File upload ticket
+                                            data</label>
+                                        <input type="file" name="ticket" class="form-control" id="ticket">
                                     </div>
 
                                 </div>

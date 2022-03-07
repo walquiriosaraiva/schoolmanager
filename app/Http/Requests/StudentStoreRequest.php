@@ -48,7 +48,8 @@ class StudentStoreRequest extends FormRequest
             'mother_name' => 'required|string',
             'mother_phone' => 'required|string',
             'parent_address' => 'required|string',
-            'cpf_or_passport' => 'nullable|string',
+            'cpf' => 'nullable|cpf',
+            'passport' => 'nullable|string',
 
             // Academic information
             'class_id' => 'required',

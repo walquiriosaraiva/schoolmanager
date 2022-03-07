@@ -28,6 +28,7 @@ class Payment extends Model
         'type_of_payment',
         'status_payment',
         'percentage_discount',
+        'upload_ticket',
     ];
 
     protected $dates = ['due_date'];

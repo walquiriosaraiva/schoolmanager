@@ -22,9 +22,9 @@
                             <form class="row" action="{{route('student.list.show')}}" method="GET">
                                 <div class="col">
                                     <select onchange="getSections(this);" class="form-select" aria-label="Class"
-                                            name="class_id" required>
+                                            name="class_id">
                                         @isset($school_classes)
-                                            <option selected disabled>Please select a class</option>
+                                            <option value="">Please select a class</option>
                                             @foreach ($school_classes as $school_class)
                                                 <option
                                                     value="{{$school_class->id}}" {{($school_class->id == request()->query('class_id'))?'selected="selected"':''}}>{{$school_class->class_name}}</option>

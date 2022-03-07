@@ -11,6 +11,8 @@ use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Cnab\Factory;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use App\Traits\SchoolSession;
 use App\Interfaces\UserInterface;
@@ -18,6 +20,7 @@ use App\Interfaces\SectionInterface;
 use App\Interfaces\SchoolClassInterface;
 use App\Interfaces\SchoolSessionInterface;
 use Illuminate\Support\Facades\Storage;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class PaymentController extends Controller
 {
@@ -44,29 +47,57 @@ class PaymentController extends Controller
     public function index(Request $request)
     {
 
-        $result = Payment::where('payment.id', '!=', 0)
-            ->select(
-                'users.first_name',
-                'users.last_name',
-                'users.id',
-                'payment.id',
-                'payment.student_id',
-                'payment.due_date',
-                'payment.tuition',
-                'payment.sdf',
-                'payment.hot_lunch',
-                'payment.enrollment',
-                'payment.type_of_payment',
-                'payment.status_payment',
-                'payment.percentage_discount',
-                'student_parent_infos.father_name',
-                'student_parent_infos.mother_name'
-            )
-            ->join('users', 'payment.student_id', '=', 'users.id')
-            ->join('student_parent_infos', 'student_parent_infos.student_id', '=', 'users.id')
-            ->orderBy('users.id')
-            ->orderBy('payment.due_date')
-            ->get();
+        if (auth()->user()->role === 'student'):
+            $result = Payment::where('users.id', '=', auth()->user()->id)
+                ->select(
+                    'users.first_name',
+                    'users.last_name',
+                    'payment.id',
+                    'payment.student_id',
+                    'payment.due_date',
+                    'payment.tuition',
+                    'payment.sdf',
+                    'payment.hot_lunch',
+                    'payment.enrollment',
+                    'payment.type_of_payment',
+                    'payment.status_payment',
+                    'payment.upload_ticket',
+                    'payment.percentage_discount',
+                    'student_parent_infos.father_name',
+                    'student_parent_infos.mother_name'
+                )
+                ->join('users', 'payment.student_id', '=', 'users.id')
+                ->join('student_parent_infos', 'student_parent_infos.student_id', '=', 'users.id')
+                ->orderBy('users.id')
+                ->orderBy('payment.due_date')
+                ->get();
+
+        else:
+            $result = Payment::where('payment.id', '!=', 0)
+                ->select(
+                    'users.first_name',
+                    'users.last_name',
+                    'users.id',
+                    'payment.id',
+                    'payment.student_id',
+                    'payment.due_date',
+                    'payment.tuition',
+                    'payment.sdf',
+                    'payment.hot_lunch',
+                    'payment.enrollment',
+                    'payment.type_of_payment',
+                    'payment.status_payment',
+                    'payment.upload_ticket',
+                    'payment.percentage_discount',
+                    'student_parent_infos.father_name',
+                    'student_parent_infos.mother_name'
+                )
+                ->join('users', 'payment.student_id', '=', 'users.id')
+                ->join('student_parent_infos', 'student_parent_infos.student_id', '=', 'users.id')
+                ->orderBy('users.id')
+                ->orderBy('payment.due_date')
+                ->get();
+        endif;
 
         return view('payment.index', compact('result'));
     }
@@ -154,7 +185,11 @@ class PaymentController extends Controller
         $students = User::where('role', '=', 'student')->get();
         $payment = Payment::where('id', '=', $id)->first();
         $studentsParents = StudentParentInfo::where('student_id', '=', $payment->student_id)->first();
-        $bankReturnData = BankReturnData::all();
+        $bankReturnData = BankReturnData::whereNotExists(function ($query) {
+            $query->select(DB::raw(1))
+                ->from('payment_confirm_estudent')
+                ->whereRaw('payment_confirm_estudent.bank_return_data_id = bank_return_data.id');
+        })->get();
 
         return view('payment.edit', compact('students', 'payment', 'bankReturnData', 'studentsParents'));
     }
@@ -192,8 +227,13 @@ class PaymentController extends Controller
 
             }
 
-            Payment::whereId($id)->update($updateData);
+            if (isset($request['ticket']) && $request['ticket']) {
+                $updateData['upload_ticket'] = '1';
+                $ticket = $request['ticket']->getClientOriginalName();
+                Storage::put('payment/payment_' . $id . '/student_' . $request->get('student_id') . '/pdf-ticket/' . 'ticket.' . pathinfo($ticket, PATHINFO_EXTENSION), $request->file('ticket')->getContent());
+            }
 
+            Payment::whereId($id)->update($updateData);
             return redirect()->route('payment.index')
                 ->withInput()
                 ->with(['success' => 'success']);
@@ -320,5 +360,51 @@ class PaymentController extends Controller
     public function destroy(Promotion $promotion)
     {
         //
+    }
+
+    public function sendEmail($id)
+    {
+        $mail = new PHPMailer(true);
+
+        $user = User::where('id', '=', $id)->first();
+
+        try {
+
+            $mail->isSMTP();
+            $mail->CharSet = 'UTF-8';
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = env('MAIL_ENCRYPTION');
+            $mail->Host = env('MAIL_HOST');
+            $mail->Port = env('MAIL_PORT');
+            $mail->Username = env('MAIL_USERNAME');
+            $mail->Password = env('MAIL_PASSWORD');
+            $mail->setFrom(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+            $mail->Subject = 'Assunto a ser definido';
+            $mail->isHTML(true);
+
+            $mensagemConteudo = "Corpo do e-mail a ser definido";
+
+            $mail->MsgHTML($mensagemConteudo);
+            $mail->addAddress($user->email, $user->first_name . ' ' . $user->last_name);
+
+            /*
+            $path = Storage::get("student/{$id}/pdf-ticket/ticket.pdf");
+            $response = Response::make($path, 200);
+            $response->header('content-type', 'application/pdf');
+            $mail->addAttachment($response, 'Boleto.pdf');
+            */
+
+            if ($mail->send()):
+                $result = array('result' => 'success', 'title' => 'Contato enviado com sucesso!');
+            else:
+                $result = array('result' => 'error', 'title' => 'Ouve erro ao tentar enviar e-mail!');
+            endif;
+        } catch (\Exception $e) {
+            $result = array('result' => 'error', 'title' => $e->getMessage());
+            return $e->getMessage();
+        }
+
+        return true;
+
     }
 }

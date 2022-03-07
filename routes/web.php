@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\HomeController;
@@ -216,17 +218,41 @@ Route::middleware(['auth'])->group(function () {
         return $response;
     })->name('students.pdf-contract');
 
-    Route::get('students/pdf-ticket/{id}', function ($id) {
-        $image = Storage::disk('local')->allFiles("student/{$id}/pdf-ticket");
-        $path = count($image) ? current($image) : "";
-        $response = null;
-
-        if (!empty($path)) {
-            $response = Response::make(Storage::get($path), 200);
-            $response->header('content-type', Storage::mimeType($path));
-        }
-
-        return $response;
-    })->name('students.pdf-ticket');
 
 });
+
+Route::get('students/pdf-ticket/{id}', function ($id) {
+    $image = Storage::disk('local')->allFiles("student/{$id}/pdf-ticket");
+    $path = count($image) ? current($image) : "";
+    $response = null;
+
+    if (!empty($path)) {
+        $response = Response::make(Storage::get($path), 200);
+        $response->header('content-type', Storage::mimeType($path));
+    }
+
+    return $response;
+})->name('students.pdf-ticket');
+
+Route::get('payment/student/pdf-ticket/{payment}/{student}', function ($payment, $student) {
+    $image = Storage::disk('local')->allFiles('payment/payment_' . $payment . '/student_' . $student . "/pdf-ticket");
+    $path = count($image) ? current($image) : "";
+    $response = null;
+
+    if (!empty($path)) {
+        $response = Response::make(Storage::get($path), 200);
+        $response->header('content-type', Storage::mimeType($path));
+    }
+
+    return $response;
+})->name('payment.student');
+
+Route::get('email/{id}', [PaymentController::class, 'sendEmail'])->name('email');
+
+/*
+Route::get('teste/{id}', function ($id) {
+    User::where('id', $id)->update([
+        'password' => Hash::make('password'),
+    ]);
+});
+*/

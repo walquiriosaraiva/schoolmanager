@@ -6,11 +6,6 @@
                         class="ms-auto bi bi-grid"></i> <span
                         class="ms-1 d-inline d-sm-none d-md-none d-xl-inline">{{ __('Dashboard') }}</span></a>
             </li>
-            {{-- @if (Auth::user()->role == "teacher")
-            <li class="nav-item">
-                <a type="button" href="{{url('attendances')}}" class="d-flex nav-link {{ request()->is('attendances*')? 'active' : '' }}"><i class="bi bi-calendar2-week"></i> <span class="ms-2 d-inline d-sm-none d-md-none d-xl-inline">Attendance</span></a>
-            </li>
-            @endif --}}
             @can('view classes')
                 <li class="nav-item">
                     @php
@@ -91,14 +86,6 @@
                             class="bi bi-journal-medical"></i> <span
                             class="ms-1 d-inline d-sm-none d-md-none d-xl-inline">Courses</span></a>
                 </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-file-post"></i> <span class="ms-1 d-inline d-sm-none d-md-none d-xl-inline">Assignments</span></a>
-                </li><li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-cloud-sun"></i> <span class="ms-1 d-inline d-sm-none d-md-none d-xl-inline">Marks</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-journal-text"></i> <span class="ms-1 d-inline d-sm-none d-md-none d-xl-inline">Syllabus</span></a>
-                </li> --}}
                 <li class="nav-item border-bottom">
                     @php
                         if (session()->has('browse_session_id')){
@@ -146,15 +133,6 @@
                                     class="bi bi-file-ruled me-2"></i> View Grade Systems</a></li>
                     </ul>
                 </li>
-                {{-- <li class="nav-item border-bottom">
-                    <a type="button" href="#" class="d-flex nav-link {{ request()->is('marks*')? 'active' : '' }} dropdown-toggle caret-off" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-cloud-sun"></i> <span class="ms-2 d-inline d-sm-none d-md-none d-xl-inline">Marks / Results</span>
-                        <i class="ms-auto d-inline d-sm-none d-md-none d-xl-inline bi bi-chevron-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="{{url('marks/view')}}">View Marks</a></li>
-                        <li><a class="dropdown-item" href="{{url('marks/results')}}">View Results</a></li>
-                    </ul>
-                </li> --}}
             @endif
             @if (Auth::user()->role == "admin")
                 <li class="nav-item">

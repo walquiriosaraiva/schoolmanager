@@ -43,9 +43,7 @@
                                     <th scope="col">Type of payment</th>
                                     <th scope="col">Status payment</th>
                                     <th scope="col">Percentage discount</th>
-                                    @if (Auth::user()->role == "admin")
-                                        <th scope="col">Actions</th>
-                                    @endif
+                                    <th scope="col">Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -66,7 +64,24 @@
                                                     <div class="btn-group" role="group">
                                                         <a href="{{route('payment.edit', ['id' => $object->id])}}"
                                                            role="button" class="btn btn-sm btn-outline-primary"><i
-                                                                class="bi bi-sort-numeric-up-alt"></i>Edit</a>
+                                                                class="bi bi-sort-numeric-up-alt"></i> Edit</a>
+                                                    </div>
+                                                    @if($object->upload_ticket === '1')
+                                                        <div class="btn-group" role="group">
+                                                            <a href="{{route('payment.student', ['payment' => $object->id, 'student' => $object->student_id])}}"
+                                                               download class="btn btn-sm btn-outline-primary"><i
+                                                                    class="bi bi-download"></i> Download</a>
+                                                        </div>
+                                                    @endif
+                                                </td>
+
+
+                                            @else
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <a href="{{route('payment.student', ['payment' => $object->id, 'student' => $object->student_id])}}"
+                                                           role="button" class="btn btn-sm btn-outline-primary"><i
+                                                                class="bi bi-sort-numeric-up-alt"></i>Download</a>
                                                     </div>
                                                 </td>
                                             @endif

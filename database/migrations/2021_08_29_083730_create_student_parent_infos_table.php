@@ -21,7 +21,8 @@ class CreateStudentParentInfosTable extends Migration
             $table->string('mother_name');
             $table->string('mother_phone');
             $table->string('parent_address');
-            $table->string('cpf_or_passport')->nullable();
+            $table->string('cpf')->nullable();
+            $table->string('passport')->nullable();
             $table->timestamps();
         });
     }

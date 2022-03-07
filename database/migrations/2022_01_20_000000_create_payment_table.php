@@ -23,6 +23,7 @@ class CreatePaymentTable extends Migration
             $table->decimal('enrollment', 12, 2)->nullable();
             $table->string('type_of_payment', 50)->nullable();
             $table->string('status_payment', 30)->nullable();
+            $table->string('upload_ticket', 1)->nullable();
             $table->decimal('percentage_discount', 12, 2)->nullable();
 
             $table->timestamps();
