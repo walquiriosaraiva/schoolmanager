@@ -115,7 +115,7 @@
                                             </tr>
                                             <tr>
                                                 <th scope="row">CPF:</th>
-                                                <td colspan="3">{{$student->parent_info->cpf}}</td>
+                                                <td colspan="3">{{formata($student->parent_info->cpf)}}</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Passport:</th>

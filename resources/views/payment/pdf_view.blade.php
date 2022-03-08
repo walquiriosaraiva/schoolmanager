@@ -243,7 +243,7 @@
                 </tr>
                 <tr>
                     <td>
-                        CPF: {{ $result->cpf_or_passport }}
+                        CPF: {{ $result->cpf ? formata($result->cpf) : $result->passport }}
                     </td>
                 </tr>
             </table>
@@ -323,7 +323,7 @@
                 </tr>
                 <tr>
                     <td>
-                        CPF da Parte Responsável (Pais/Responsáveis): {{ $result->cpf_or_passport }}
+                        CPF da Parte Responsável (Pais/Responsáveis): {{ $result->cpf }}
                     </td>
                 </tr>
                 <tr>

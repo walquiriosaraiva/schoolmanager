@@ -150,7 +150,7 @@ class UserRepository implements UserInterface
                     'religion' => $request['religion'],
                     'blood_type' => $request['blood_type'],
                 ]);
-                
+
                 // Update Parents' information
                 $studentParentInfoRepository = new StudentParentInfoRepository();
                 $studentParentInfoRepository->update($request, $request['student_id']);
@@ -196,7 +196,11 @@ class UserRepository implements UserInterface
                 'promotions.id_card_number',
                 'school_sessions.session_name',
                 'student_parent_infos.father_name',
-                'student_parent_infos.mother_name'
+                'student_parent_infos.father_phone',
+                'student_parent_infos.mother_name',
+                'student_parent_infos.mother_phone',
+                'student_parent_infos.cpf',
+                'student_parent_infos.passport'
             )
             ->join('promotions', 'promotions.student_id', '=', 'users.id')
             ->join('school_sessions', 'promotions.session_id', '=', 'school_sessions.id')
@@ -206,8 +210,10 @@ class UserRepository implements UserInterface
         $payment = Payment::where('student_id', '=', (int)$id)->get();
         $totalGeral = 0;
         foreach ($payment as $value):
-            $value->total_geral_linha = number_format($value->tuition + $value->sdf + $value->hot_lunch + $value->enrollment, 2);
-            $totalGeral += $value->tuition + $value->sdf + $value->hot_lunch + $value->enrollment;
+            $total = $value->tuition + $value->sdf + $value->hot_lunch + $value->enrollment;
+            $desconto = $total - ($total / 100 * $value->percentage_discount);
+            $value->total_geral_linha = number_format($total - $desconto, 2);
+            $totalGeral += $value->total_geral_linha;
         endforeach;
 
         $pdf = PDF::loadView('students.pdf_view', compact('result', 'page_html', 'payment', 'totalGeral'));

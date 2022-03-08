@@ -276,7 +276,11 @@ class PaymentController extends Controller
                 'promotions.id_card_number',
                 'school_sessions.session_name',
                 'student_parent_infos.father_name',
-                'student_parent_infos.mother_name'
+                'student_parent_infos.father_phone',
+                'student_parent_infos.mother_name',
+                'student_parent_infos.mother_phone',
+                'student_parent_infos.cpf',
+                'student_parent_infos.passport'
             )
             ->join('promotions', 'promotions.student_id', '=', 'users.id')
             ->join('school_sessions', 'promotions.session_id', '=', 'school_sessions.id')
@@ -286,8 +290,9 @@ class PaymentController extends Controller
         $payment = Payment::where('student_id', '=', (int)$id)->get();
         $totalGeral = 0;
         foreach ($payment as $value):
-            $value->total_geral_linha = number_format($value->tuition + $value->sdf + $value->hot_lunch + $value->enrollment, 2);
-            $totalGeral += $value->tuition + $value->sdf + $value->hot_lunch + $value->enrollment;
+            $total = $value->tuition + $value->sdf + $value->hot_lunch + $value->enrollment;
+            $value->total_geral_linha = number_format($total - ($total / 100 * $value->percentage_discount), 2);
+            $totalGeral += $value->total_geral_linha;
         endforeach;
 
         $pdf = PDF::loadView('students.pdf_view', compact('result', 'page_html', 'payment', 'totalGeral'));
@@ -301,7 +306,7 @@ class PaymentController extends Controller
     public function viewHtml($id)
     {
         $page_html = true;
-        $result = User::where('users.id', '=', $id)
+        $result = User::where('users.id', '=', (int)$id)
             ->select(
                 'users.id',
                 'users.first_name',
@@ -326,11 +331,12 @@ class PaymentController extends Controller
                 'promotions.session_id',
                 'promotions.id_card_number',
                 'school_sessions.session_name',
-                'student_parent_infos.cpf_or_passport',
-                'student_parent_infos.father_phone',
-                'student_parent_infos.mother_phone',
                 'student_parent_infos.father_name',
-                'student_parent_infos.mother_name'
+                'student_parent_infos.father_phone',
+                'student_parent_infos.mother_name',
+                'student_parent_infos.mother_phone',
+                'student_parent_infos.cpf',
+                'student_parent_infos.passport'
             )
             ->join('promotions', 'promotions.student_id', '=', 'users.id')
             ->join('school_sessions', 'promotions.session_id', '=', 'school_sessions.id')
