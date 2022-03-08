@@ -152,12 +152,18 @@
                                 <div class="row mt-4 g-3">
                                     <h6>Parents' Information</h6>
                                     <div class="col-md-3">
-                                        <label for="cpf_or_passport" class="form-label">CPF or passport<sup><i
-                                                    class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="text" class="form-control" id="cpf_or_passport"
-                                               name="cpf_or_passport"
-                                               placeholder="CPF or passport" required
-                                               value="{{$parent_info->cpf_or_passport}}">
+                                        <label for="cpf" class="form-label">CPF</label>
+                                        <input type="text" class="form-control" id="cpf"
+                                               name="cpf"
+                                               placeholder="CPF"
+                                               value="{{$parent_info->cpf}}">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="passport" class="form-label">Passport</label>
+                                        <input type="text" class="form-control" id="passport"
+                                               name="passport"
+                                               placeholder="Passport"
+                                               value="{{$parent_info->passport}}">
                                     </div>
                                     <div class="col-4">
                                         <label for="inputFatherName" class="form-label">Father Name<sup><i

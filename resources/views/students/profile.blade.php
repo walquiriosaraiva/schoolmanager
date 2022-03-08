@@ -114,8 +114,12 @@
                                                 <td>{{$student->parent_info->mother_phone}}</td>
                                             </tr>
                                             <tr>
-                                                <th scope="row">CPF or passport:</th>
-                                                <td colspan="3">{{$student->parent_info->cpf_or_passport}}</td>
+                                                <th scope="row">CPF:</th>
+                                                <td colspan="3">{{$student->parent_info->cpf}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Passport:</th>
+                                                <td colspan="3">{{$student->parent_info->passport}}</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Address:</th>

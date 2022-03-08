@@ -2,11 +2,13 @@
 
 namespace App\Repositories;
 
+use App\Models\Payment;
 use App\Models\User;
 use App\Traits\Base64ToFile;
 use App\Interfaces\UserInterface;
 use App\Models\SchoolClass;
 use App\Models\Section;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Repositories\PromotionRepository;
@@ -121,10 +123,7 @@ class UserRepository implements UserInterface
                     'view notices'
                 );
 
-                if (isset($request['ticket']) && $request['ticket']) {
-                    $ticket = $request['ticket']->getClientOriginalName();
-                    Storage::put('student/' . $student->id . '/pdf-ticket/' . 'ticket.' . pathinfo($ticket, PATHINFO_EXTENSION), $request->file('ticket')->getContent());
-                }
+                $this->createPDF($student->id);
 
             });
         } catch (\Exception $e) {
@@ -152,6 +151,7 @@ class UserRepository implements UserInterface
                     'blood_type' => $request['blood_type'],
                 ]);
 
+                dd($request);
                 // Update Parents' information
                 $studentParentInfoRepository = new StudentParentInfoRepository();
                 $studentParentInfoRepository->update($request, $request['student_id']);
@@ -159,10 +159,64 @@ class UserRepository implements UserInterface
                 // Update Student's ID card number
                 $promotionRepository = new PromotionRepository();
                 $promotionRepository->update($request, $request['student_id']);
+
+                $this->createPDF($request['student_id']);
             });
         } catch (\Exception $e) {
             throw new \Exception('Failed to update Student. ' . $e->getMessage());
         }
+    }
+
+    public function createPDF($id)
+    {
+        $page_html = false;
+
+        $result = User::where('users.id', '=', (int)$id)
+            ->select(
+                'users.id',
+                'users.first_name',
+                'users.last_name',
+                'users.email',
+                'users.password',
+                'users.gender',
+                'users.nationality',
+                'users.phone',
+                'users.address',
+                'users.address2',
+                'users.city',
+                'users.zip',
+                'users.photo',
+                'users.birthday',
+                'users.religion',
+                'users.blood_type',
+                'users.role',
+                'promotions.student_id',
+                'promotions.class_id',
+                'promotions.section_id',
+                'promotions.session_id',
+                'promotions.id_card_number',
+                'school_sessions.session_name',
+                'student_parent_infos.father_name',
+                'student_parent_infos.mother_name'
+            )
+            ->join('promotions', 'promotions.student_id', '=', 'users.id')
+            ->join('school_sessions', 'promotions.session_id', '=', 'school_sessions.id')
+            ->join('student_parent_infos', 'users.id', '=', 'student_parent_infos.student_id')
+            ->first();
+
+        $payment = Payment::where('student_id', '=', (int)$id)->get();
+        $totalGeral = 0;
+        foreach ($payment as $value):
+            $value->total_geral_linha = number_format($value->tuition + $value->sdf + $value->hot_lunch + $value->enrollment, 2);
+            $totalGeral += $value->tuition + $value->sdf + $value->hot_lunch + $value->enrollment;
+        endforeach;
+
+        $pdf = PDF::loadView('students.pdf_view', compact('result', 'page_html', 'payment', 'totalGeral'));
+
+        Storage::put('students/' . (int)$id . '/pdf/contract.pdf', $pdf->output());
+
+        return true;
+
     }
 
     public function updateTeacher($request)
