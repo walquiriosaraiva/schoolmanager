@@ -20,7 +20,7 @@
                                         <label for="file" class="form-label">File upload bank return
                                             data<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="file" name="file" class="form-control" id="file">
+                                        <input type="file" name="file" required class="form-control" id="file">
                                     </div>
                                 </div>
                                 <div class="row mt-4">

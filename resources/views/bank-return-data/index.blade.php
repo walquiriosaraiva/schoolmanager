@@ -36,6 +36,7 @@
                                     <th scope="col">Date of occurrence</th>
                                     <th scope="col">Wallet</th>
                                     <th scope="col">Upload Date</th>
+                                    <th scope="col">Name</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -47,6 +48,7 @@
                                             <td>{{$object->data_de_ocorrencia->format('d/m/Y')}}</td>
                                             <td>{{$object->carteira}}</td>
                                             <td>{{$object->created_at->format('d/m/Y')}}</td>
+                                            <td>{{$object->nome_do_sacado}}</td>
                                         </tr>
                                     @endforeach
                                 @endisset

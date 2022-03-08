@@ -225,4 +225,10 @@
         </div>
     </div>
     @include('components.photos.photo-input')
+    <script src="/js/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="/js/jquery.mask.js"></script>
+    <script>
+        $('#cpf').mask('000.000.000-00', {reverse: true});
+    </script>
+
 @endsection
