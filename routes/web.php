@@ -150,8 +150,10 @@ Route::middleware(['auth'])->group(function () {
 
     // Payment
     Route::get('/payment/index', [PaymentController::class, 'index'])->name('payment.index');
+    Route::post('/payment/search', [PaymentController::class, 'index'])->name('payment.search');
     Route::get('/payment/payment', [PaymentController::class, 'create'])->name('payment.create');
     Route::get('/payment/edit/{id}', [PaymentController::class, 'edit'])->name('payment.edit');
+    Route::delete('/payment/destroy/{id}', [PaymentController::class, 'destroy'])->name('payment.destroy');
     Route::put('/payment/{id}', [PaymentController::class, 'update'])->name('payment.update');
     Route::post('/payment/payment', [PaymentController::class, 'store'])->name('payment.store');
     Route::post('/payment/students', [PaymentController::class, 'findStudent'])->name('payment.student.show');
@@ -205,6 +207,8 @@ Route::middleware(['auth'])->group(function () {
     // contrat student
     Route::get('/students/pdf/{id}', [PaymentController::class, 'createPDF'])->name('payment.pdf');
 
+    Route::get('students/pdf-contract/{id}', [UserController::class, 'createPDF'])->name('students.pdf-contract');
+    /*
     Route::get('students/pdf-contract/{id}', function ($id) {
         $image = Storage::disk('local')->allFiles("students/{$id}/pdf");
         $path = count($image) ? current($image) : "";
@@ -217,6 +221,7 @@ Route::middleware(['auth'])->group(function () {
 
         return $response;
     })->name('students.pdf-contract');
+    */
 
 
 });
@@ -242,6 +247,10 @@ Route::get('payment/student/pdf-ticket/{payment}/{student}', function ($payment,
     if (!empty($path)) {
         $response = Response::make(Storage::get($path), 200);
         $response->header('content-type', Storage::mimeType($path));
+    } else {
+        return redirect()->route('payment.index')
+            ->withInput()
+            ->with(['error' => 'Erro no download']);
     }
 
     return $response;

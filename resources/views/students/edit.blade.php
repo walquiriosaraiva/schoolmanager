@@ -43,6 +43,24 @@
                                         <input type="email" class="form-control" id="inputEmail4" name="email" required
                                                value="{{$student->email}}">
                                     </div>
+
+                                    <div class="col-5">
+                                        @if (isset($student->photo))
+                                            <img src="{{asset('/storage'.$student->photo)}}"
+                                                 class="rounded-3 card-img-top" alt="Profile photo">
+                                        @else
+                                            <img src="{{asset('imgs/profile.png')}}" class="rounded-3 card-img-top"
+                                                 alt="Profile photo">
+                                        @endif
+                                    </div>
+
+                                    <div class="col-5">
+                                        <label for="formFile" class="form-label">Photo</label>
+                                        <input class="form-control" type="file" id="formFile" onchange="previewFile()">
+                                        <div id="previewPhoto"></div>
+                                        <input type="hidden" id="photoHiddenInput" name="photo" value="">
+                                    </div>
+
                                     <div class="col-3">
                                         <label for="inputBirthday" class="form-label">Birthday<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>

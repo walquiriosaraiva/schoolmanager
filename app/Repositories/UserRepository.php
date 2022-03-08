@@ -149,6 +149,7 @@ class UserRepository implements UserInterface
                     'birthday' => $request['birthday'],
                     'religion' => $request['religion'],
                     'blood_type' => $request['blood_type'],
+                    'photo' => (!empty($request['photo'])) ? $this->convert($request['photo']) : null,
                 ]);
 
                 // Update Parents' information

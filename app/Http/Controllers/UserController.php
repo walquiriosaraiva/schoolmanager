@@ -6,6 +6,7 @@ use App\Models\Payment;
 use App\Models\User;
 use App\Repositories\PaymentRepository;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use App\Traits\SchoolSession;
 use App\Interfaces\UserInterface;
@@ -245,62 +246,71 @@ class UserController extends Controller
         return view('teachers.list', $data);
     }
 
-    public function createPDF($data)
+    public function createPDF($id)
     {
+        $page_html = false;
 
-        try {
-            $page_html = false;
-            $result = User::where('users.id', '=', $data['id'])
-                ->select(
-                    'users.id',
-                    'users.first_name',
-                    'users.last_name',
-                    'users.email',
-                    'users.password',
-                    'users.gender',
-                    'users.nationality',
-                    'users.phone',
-                    'users.address',
-                    'users.address2',
-                    'users.city',
-                    'users.zip',
-                    'users.photo',
-                    'users.birthday',
-                    'users.religion',
-                    'users.blood_type',
-                    'users.role',
-                    'promotions.student_id',
-                    'promotions.class_id',
-                    'promotions.section_id',
-                    'promotions.session_id',
-                    'promotions.id_card_number',
-                    'school_sessions.session_name',
-                    'student_parent_infos.cpf_or_passport',
-                    'student_parent_infos.father_phone',
-                    'student_parent_infos.mother_phone',
-                    'student_parent_infos.father_name',
-                    'student_parent_infos.mother_name'
-                )
-                ->join('promotions', 'promotions.student_id', '=', 'users.id')
-                ->join('school_sessions', 'promotions.session_id', '=', 'school_sessions.id')
-                ->join('student_parent_infos', 'users.id', '=', 'student_parent_infos.student_id')
-                ->first();
+        $id = (int)$id;
+        $result = User::where('users.id', '=', $id)
+            ->select(
+                'users.id',
+                'users.first_name',
+                'users.last_name',
+                'users.email',
+                'users.password',
+                'users.gender',
+                'users.nationality',
+                'users.phone',
+                'users.address',
+                'users.address2',
+                'users.city',
+                'users.zip',
+                'users.photo',
+                'users.birthday',
+                'users.religion',
+                'users.blood_type',
+                'users.role',
+                'promotions.student_id',
+                'promotions.class_id',
+                'promotions.section_id',
+                'promotions.session_id',
+                'promotions.id_card_number',
+                'school_sessions.session_name',
+                'student_parent_infos.father_name',
+                'student_parent_infos.father_phone',
+                'student_parent_infos.mother_name',
+                'student_parent_infos.mother_phone',
+                'student_parent_infos.cpf',
+                'student_parent_infos.passport'
+            )
+            ->join('promotions', 'promotions.student_id', '=', 'users.id')
+            ->join('school_sessions', 'promotions.session_id', '=', 'school_sessions.id')
+            ->join('student_parent_infos', 'users.id', '=', 'student_parent_infos.student_id')
+            ->first();
 
-            $payment = Payment::where('student_id', '=', $data['id'])->get();
-            $totalGeral = 0;
-            foreach ($payment as $value):
-                $value->total_geral_linha = number_format($value->tuition + $value->sdf + $value->hot_lunch + $value->enrollment, 2);
-                $totalGeral += $value->tuition + $value->sdf + $value->hot_lunch + $value->enrollment;
-            endforeach;
+        $payment = Payment::where('student_id', '=', $id)->get();
+        $totalGeral = 0;
+        foreach ($payment as $value):
+            $total = $value->tuition + $value->sdf + $value->hot_lunch + $value->enrollment;
+            $desconto = $total - ($total / 100 * $value->percentage_discount);
+            $value->total_geral_linha = number_format($total - $desconto, 2);
+            $totalGeral += $value->total_geral_linha;
+        endforeach;
 
-            $pdf = PDF::loadView('payment.pdf_view', compact('result', 'page_html', 'payment', 'totalGeral'));
+        $pdf = PDF::loadView('students.pdf_view', compact('result', 'page_html', 'payment', 'totalGeral'));
 
-            Storage::put('student/' . $data['id'] . '/pdf-contract/contract.pdf', $pdf->output());
-        } catch (\Exception $e) {
-            return $e->getMessage();
+        Storage::put('students/' . $id . '/pdf/contract.pdf', $pdf->output());
+
+        $image = Storage::disk('local')->allFiles("students/{$id}/pdf");
+        $path = count($image) ? current($image) : "";
+        $response = null;
+
+        if (!empty($path)) {
+            $response = Response::make(Storage::get($path), 200);
+            $response->header('content-type', Storage::mimeType($path));
         }
 
-        return true;
+        return $response;
 
     }
 }

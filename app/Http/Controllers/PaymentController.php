@@ -10,9 +10,7 @@ use App\Models\StudentParentInfo;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
-use Cnab\Factory;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use App\Traits\SchoolSession;
 use App\Interfaces\UserInterface;
@@ -46,7 +44,9 @@ class PaymentController extends Controller
 
     public function index(Request $request)
     {
-
+        $data = $request->all();
+        $student_id = 0;
+        $students = User::where('role', '=', 'student')->get();
         if (auth()->user()->role === 'student'):
             $result = Payment::where('users.id', '=', auth()->user()->id)
                 ->select(
@@ -73,33 +73,66 @@ class PaymentController extends Controller
                 ->get();
 
         else:
-            $result = Payment::where('payment.id', '!=', 0)
-                ->select(
-                    'users.first_name',
-                    'users.last_name',
-                    'users.id',
-                    'payment.id',
-                    'payment.student_id',
-                    'payment.due_date',
-                    'payment.tuition',
-                    'payment.sdf',
-                    'payment.hot_lunch',
-                    'payment.enrollment',
-                    'payment.type_of_payment',
-                    'payment.status_payment',
-                    'payment.upload_ticket',
-                    'payment.percentage_discount',
-                    'student_parent_infos.father_name',
-                    'student_parent_infos.mother_name'
-                )
-                ->join('users', 'payment.student_id', '=', 'users.id')
-                ->join('student_parent_infos', 'student_parent_infos.student_id', '=', 'users.id')
-                ->orderBy('users.id')
-                ->orderBy('payment.due_date')
-                ->get();
+            if (isset($data['student_id']) && $data['student_id']):
+                $student_id = $data['student_id'];
+                $result = Payment::where('users.id', '=', $data['student_id'])
+                    ->select(
+                        'users.first_name',
+                        'users.last_name',
+                        'users.id',
+                        'payment.id',
+                        'payment.student_id',
+                        'payment.due_date',
+                        'payment.tuition',
+                        'payment.sdf',
+                        'payment.hot_lunch',
+                        'payment.enrollment',
+                        'payment.type_of_payment',
+                        'payment.status_payment',
+                        'payment.upload_ticket',
+                        'payment.percentage_discount',
+                        'student_parent_infos.father_name',
+                        'student_parent_infos.mother_name'
+                    )
+                    ->join('users', 'payment.student_id', '=', 'users.id')
+                    ->join('student_parent_infos', 'student_parent_infos.student_id', '=', 'users.id')
+                    ->orderBy('users.id')
+                    ->orderBy('payment.due_date')
+                    ->get();
+            else:
+                $result = Payment::where('users.id', '!=', 0)
+                    ->select(
+                        'users.first_name',
+                        'users.last_name',
+                        'users.id',
+                        'payment.id',
+                        'payment.student_id',
+                        'payment.due_date',
+                        'payment.tuition',
+                        'payment.sdf',
+                        'payment.hot_lunch',
+                        'payment.enrollment',
+                        'payment.type_of_payment',
+                        'payment.status_payment',
+                        'payment.upload_ticket',
+                        'payment.percentage_discount',
+                        'student_parent_infos.father_name',
+                        'student_parent_infos.mother_name'
+                    )
+                    ->join('users', 'payment.student_id', '=', 'users.id')
+                    ->join('student_parent_infos', 'student_parent_infos.student_id', '=', 'users.id')
+                    ->orderBy('users.id')
+                    ->orderBy('payment.due_date')
+                    ->get();
+            endif;
         endif;
 
-        return view('payment.index', compact('result'));
+        foreach ($result as $key => $value):
+            $total = $value->tuition + $value->sdf + $value->hot_lunch + $value->enrollment;
+            $value->totalLinha = number_format($total - ($total / 100 * $value->percentage_discount), 2);
+        endforeach;
+
+        return view('payment.index', compact('result', 'students', 'student_id'));
     }
 
     public function findStudent(Request $request)
@@ -365,9 +398,19 @@ class PaymentController extends Controller
         //
     }
 
-    public function destroy(Promotion $promotion)
+    public function destroy($id)
     {
-        //
+        $destroyData = Payment::findOrFail($id);
+
+        if ($destroyData->delete()):
+            return redirect()->route('payment.index')
+                ->withInput()
+                ->with(['success' => 'Pagamento excluido com sucesso']);
+        else:
+            return redirect()->route('payment.index')
+                ->withInput()
+                ->with(['error' => 'Erro ao tentar excluir o pagamento']);
+        endif;
     }
 
     public function sendEmail($id)

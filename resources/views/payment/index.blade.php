@@ -31,6 +31,24 @@
                             @csrf
                         </h6>
                         <div class="mb-4 mt-4">
+                            @if (Auth::user()->role == "admin")
+                                <div class="col-md-6">
+                                    <form class="row g-3" action="{{route('payment.search')}}" method="POST"
+                                          name="search" id="search">
+                                        @csrf
+                                        <label for="student_id" class="form-label">Student:<sup><i
+                                                    class="bi bi-asterisk text-primary"></i></sup></label>
+                                        <select class="form-select"
+                                                id="student_id" name="student_id" required>
+                                            <option value="">Please select a student</option>
+                                            @foreach ($students as $value)
+                                                <option
+                                                    value="{{$value->id}}" {{ $value->id == $student_id ? 'selected' : ''  }}>{{$value->first_name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </form>
+                                </div>
+                            @endif
                             <table class="table mt-4" id="tablePayment">
                                 <thead>
                                 <tr>
@@ -43,6 +61,7 @@
                                     <th scope="col">Type of payment</th>
                                     <th scope="col">Status payment</th>
                                     <th scope="col">Percentage discount</th>
+                                    <th scope="col">Total</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                                 </thead>
@@ -59,6 +78,7 @@
                                             <td>{{$object->type_of_payment}}</td>
                                             <td>{{$object->status_payment}}</td>
                                             <td>{{$object->percentage_discount}}</td>
+                                            <td>{{$object->totalLinha}}</td>
                                             @if (Auth::user()->role == "admin")
                                                 <td>
                                                     <div class="btn-group" role="group">
@@ -66,6 +86,16 @@
                                                            role="button" class="btn btn-sm btn-outline-primary"><i
                                                                 class="bi bi-sort-numeric-up-alt"></i> Edit</a>
                                                     </div>
+
+                                                    <form action="{{ route('payment.destroy', $object->id)}}"
+                                                          method="post"
+                                                          style="display: inline-block">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger btn-sm"
+                                                                type="submit">Excluir
+                                                        </button>
+                                                    </form>
                                                     @if($object->upload_ticket === '1')
                                                         <div class="btn-group" role="group">
                                                             <a href="{{route('payment.student', ['payment' => $object->id, 'student' => $object->student_id])}}"
@@ -97,9 +127,7 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-            crossorigin="anonymous"></script>
+    <script src="/js/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
     <script>
 
         function confirmPayment(object) {
@@ -117,6 +145,16 @@
 
 
         $(document).ready(function () {
+
+            $("#student_id").blur(function () {
+
+                var student = $(this).val();
+                var _token = $('input[name="_token"]').val();
+                if (student > 0) {
+                    $("#search").submit();
+                }
+
+            });
 
             $("#student").blur(function () {
 
