@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Payment;
 use App\Models\User;
+use App\Repositories\PaymentRepository;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use App\Traits\SchoolSession;
@@ -112,9 +113,25 @@ class UserController extends Controller
 
         $school_classes = $this->schoolClassRepository->getAllBySession($current_school_session_id);
 
+        $months = array(
+            1 => '1 month',
+            2 => '2 months',
+            3 => '3 months',
+            4 => '4 months',
+            5 => '5 months',
+            6 => '6 months',
+            7 => '7 months',
+            8 => '8 months',
+            9 => '9 months',
+            10 => '10 months',
+            11 => '11 months',
+            12 => '12 months'
+        );
+
         $data = [
             'current_school_session_id' => $current_school_session_id,
             'school_classes' => $school_classes,
+            'months' => $months,
         ];
 
         return view('students.add', $data);
@@ -145,11 +162,32 @@ class UserController extends Controller
         $promotionRepository = new PromotionRepository();
         $current_school_session_id = $this->getSchoolCurrentSession();
         $promotion_info = $promotionRepository->getPromotionInfoById($current_school_session_id, $student_id);
+        $paymentRepository = new PaymentRepository();
+        $payment_info = $paymentRepository->getPaymentInfo($student_id);
+        $paymentCount = $paymentRepository->getPaymentCount($student_id);
+
+        $months = array(
+            1 => '1 month',
+            2 => '2 months',
+            3 => '3 months',
+            4 => '4 months',
+            5 => '5 months',
+            6 => '6 months',
+            7 => '7 months',
+            8 => '8 months',
+            9 => '9 months',
+            10 => '10 months',
+            11 => '11 months',
+            12 => '12 months'
+        );
 
         $data = [
             'student' => $student,
             'parent_info' => $parent_info,
             'promotion_info' => $promotion_info,
+            'months' => $months,
+            'payment_info' => $payment_info,
+            'paymentCount' => $paymentCount,
         ];
         return view('students.edit', $data);
     }

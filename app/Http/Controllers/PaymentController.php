@@ -152,6 +152,7 @@ class PaymentController extends Controller
         $storeData['student_id'] = $request->get('student_id');
         $storeData['sdf'] = $request->get('sdf');
         $storeData['hot_lunch'] = $request->get('hot_lunch');
+        $storeData['tuition'] = $request->get('tuition');
         $storeData['enrollment'] = $request->get('enrollment');
         $storeData['percentage_discount'] = $request->get('percentage_discount');
         $storeData['type_of_payment'] = $request->get('type_of_payment');
@@ -245,10 +246,11 @@ class PaymentController extends Controller
 
     }
 
-    public function createPDF($data)
+    public function createPDF($id)
     {
         $page_html = false;
-        $result = User::where('users.id', '=', $data['id'])
+
+        $result = User::where('users.id', '=', (int)$id)
             ->select(
                 'users.id',
                 'users.first_name',
@@ -281,7 +283,7 @@ class PaymentController extends Controller
             ->join('student_parent_infos', 'users.id', '=', 'student_parent_infos.student_id')
             ->first();
 
-        $payment = Payment::where('student_id', '=', $data['id'])->get();
+        $payment = Payment::where('student_id', '=', (int)$id)->get();
         $totalGeral = 0;
         foreach ($payment as $value):
             $value->total_geral_linha = number_format($value->tuition + $value->sdf + $value->hot_lunch + $value->enrollment, 2);
@@ -290,7 +292,7 @@ class PaymentController extends Controller
 
         $pdf = PDF::loadView('students.pdf_view', compact('result', 'page_html', 'payment', 'totalGeral'));
 
-        Storage::put('student' . $data['id'] . '/pdf/contract.pdf', $pdf->output());
+        Storage::put('students/' . (int)$id . '/pdf/contract.pdf', $pdf->output());
 
         return true;
 

@@ -193,23 +193,16 @@
                                                value="{{$parent_info->parent_address}}">
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <label for="ticket" class="form-label">File upload ticket
-                                            data</label>
-                                        <input type="file" name="ticket" class="form-control" id="ticket">
-                                    </div>
+                                </div>
 
+                                <div class="row mt-4 g-3">
                                     <div class="col-md-12">
                                         <a href="{{ route('students.pdf-contract', ['id' => $student->id]) }}"
                                            role="button" class="btn btn-sm btn-outline-info" download><i
                                                 class="bi bi-eye"></i> Download contract</a>
-
-                                        <a href="{{ route('students.pdf-ticket', ['id' => $student->id]) }}"
-                                           role="button" class="btn btn-sm btn-outline-warning" download><i
-                                                class="bi bi-eye"></i> Download ticket</a>
                                     </div>
-
                                 </div>
+
                                 <div class="row mt-4">
                                     <div class="col-12">
                                         <button type="submit" class="btn btn-sm btn-outline-primary"><i

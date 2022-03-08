@@ -206,7 +206,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/students/pdf/{id}', [PaymentController::class, 'createPDF'])->name('payment.pdf');
 
     Route::get('students/pdf-contract/{id}', function ($id) {
-        $image = Storage::disk('local')->allFiles("student/{$id}/pdf-contract");
+        $image = Storage::disk('local')->allFiles("students/{$id}/pdf");
         $path = count($image) ? current($image) : "";
         $response = null;
 

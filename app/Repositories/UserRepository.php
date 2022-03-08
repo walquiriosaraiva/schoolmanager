@@ -96,6 +96,10 @@ class UserRepository implements UserInterface
                 $studentParentInfoRepository = new StudentParentInfoRepository();
                 $studentParentInfoRepository->store($request, $student->id);
 
+                // Store payment
+                $paymentRepository = new PaymentRepository();
+                $paymentRepository->store($request, $student->id);
+
                 // Store Academic information
                 $studentAcademicInfoRepository = new StudentAcademicInfoRepository();
                 $studentAcademicInfoRepository->store($request, $student->id);

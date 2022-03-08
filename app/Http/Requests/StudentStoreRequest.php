@@ -57,6 +57,18 @@ class StudentStoreRequest extends FormRequest
             'board_reg_no' => 'string',
             'session_id' => 'required',
             'id_card_number' => 'required',
+
+            // Student information
+            'due_date' => 'required|date',
+            'tuition' => 'required|string',
+            'sdf' => 'required|string',
+            'hot_lunch' => 'required|string',
+            'enrollment' => 'required|string',
+            'percentage_discount' => 'nullable',
+            'type_of_payment' => 'nullable',
+            'status_payment' => 'nullable',
+            'contract_duration' => 'required',
+            'student_id' => 'nullable'
         ];
     }
 }

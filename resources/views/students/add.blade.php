@@ -233,13 +233,64 @@
                                     </div>
                                     <input type="hidden" name="session_id" value="{{$current_school_session_id}}">
 
-                                    <div class="col-md-6">
-                                        <label for="ticket" class="form-label">File upload ticket
-                                            data</label>
-                                        <input type="file" name="ticket" class="form-control" id="ticket">
+                                </div>
+
+                                <div class="row mt-4 g-3">
+                                    <h6>Academic Payment</h6>
+                                    <div class="col-md-3">
+                                        <label for="due_date" class="form-label">Due date<sup><i
+                                                    class="bi bi-asterisk text-primary"></i></sup></label>
+                                        <input type="date" class="form-control" id="due_date" name="due_date"
+                                               placeholder="Due date" required value="{{old('due_date')}}">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="tuition" class="form-label">Tuition<sup><i
+                                                    class="bi bi-asterisk text-primary"></i></sup></label>
+                                        <input type="text" class="form-control" id="tuition" name="tuition"
+                                               placeholder="Tuition" required value="{{old('tuition')}}">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="sdf" class="form-label">SDF<sup><i
+                                                    class="bi bi-asterisk text-primary"></i></sup></label>
+                                        <input type="text" class="form-control" id="sdf" name="sdf"
+                                               placeholder="SDF" required value="{{old('sdf')}}">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="hot_lunch" class="form-label">Hot Lunch<sup><i
+                                                    class="bi bi-asterisk text-primary"></i></sup></label>
+                                        <input type="text" class="form-control" id="hot_lunch" name="hot_lunch"
+                                               placeholder="Hot Lunch" required value="{{old('hot_lunch')}}">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="enrollment" class="form-label">Enrollment<sup><i
+                                                    class="bi bi-asterisk text-primary"></i></sup></label>
+                                        <input type="text" class="form-control" id="enrollment" name="enrollment"
+                                               placeholder="Enrollment" required value="{{old('enrollment')}}">
                                     </div>
 
+                                    <div class="col-md-3">
+                                        <label for="percentage_discount" class="form-label">Percentage discount<sup><i
+                                                    class="bi bi-asterisk text-primary"></i></sup></label>
+                                        <input type="text" class="form-control" id="percentage_discount"
+                                               name="percentage_discount"
+                                               placeholder="Discount" required
+                                               value="{{old('percentage_discount')}}">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="contract_duration" class="form-label">Contract duration:<sup><i
+                                                    class="bi bi-asterisk text-primary"></i></sup></label>
+                                        <select class="form-select"
+                                                id="contract_duration" name="contract_duration" required>
+                                            <option value="">Please select a contract duration</option>
+                                            @foreach ($months as $key=>$value)
+                                                <option
+                                                    value="{{$key}}">{{$value}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
+
                                 <div class="row mt-4">
                                     <div class="col-12-md">
                                         <button type="submit" class="btn btn-sm btn-outline-primary"><i
