@@ -150,8 +150,7 @@ class UserRepository implements UserInterface
                     'religion' => $request['religion'],
                     'blood_type' => $request['blood_type'],
                 ]);
-
-                dd($request);
+                
                 // Update Parents' information
                 $studentParentInfoRepository = new StudentParentInfoRepository();
                 $studentParentInfoRepository->update($request, $request['student_id']);
