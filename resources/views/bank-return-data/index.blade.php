@@ -36,7 +36,7 @@
                                     <th scope="col">Date of occurrence</th>
                                     <th scope="col">Wallet</th>
                                     <th scope="col">Upload Date</th>
-                                    <th scope="col">Name</th>
+                                    <th scope="col">Name of responsible</th>
                                 </tr>
                                 </thead>
                                 <tbody>
