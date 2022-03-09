@@ -25,6 +25,30 @@
                                 @csrf
                                 <input type="hidden" name="student_id" value="{{$student->id}}">
                                 <div class="row g-3">
+
+                                    <div class="col-sm-5 col-md-3">
+                                        <div class="bg-light">
+                                            <div class="px-5 pt-2">
+                                                @if (isset($student->photo))
+                                                    <img src="{{asset('/storage'.$student->photo)}}"
+                                                         class="rounded-3 card-img-top" alt="Profile photo">
+                                                @else
+                                                    <img src="{{asset('imgs/profile.png')}}"
+                                                         class="rounded-3 card-img-top"
+                                                         alt="Profile photo">
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-9">
+                                        <label for="formFile" class="form-label">Photo</label>
+                                        <input class="form-control" type="file" id="formFile"
+                                               onchange="previewFile()">
+                                        <div id="previewPhoto"></div>
+                                        <input type="hidden" id="photoHiddenInput" name="photo" value="">
+                                    </div>
+
                                     <div class="col-3">
                                         <label for="inputFirstName" class="form-label">First Name<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
@@ -44,23 +68,6 @@
                                                value="{{$student->email}}">
                                     </div>
 
-                                    <div class="col-5">
-                                        @if (isset($student->photo))
-                                            <img src="{{asset('/storage'.$student->photo)}}"
-                                                 class="rounded-3 card-img-top" alt="Profile photo">
-                                        @else
-                                            <img src="{{asset('imgs/profile.png')}}" class="rounded-3 card-img-top"
-                                                 alt="Profile photo">
-                                        @endif
-                                    </div>
-
-                                    <div class="col-5">
-                                        <label for="formFile" class="form-label">Photo</label>
-                                        <input class="form-control" type="file" id="formFile" onchange="previewFile()">
-                                        <div id="previewPhoto"></div>
-                                        <input type="hidden" id="photoHiddenInput" name="photo" value="">
-                                    </div>
-
                                     <div class="col-3">
                                         <label for="inputBirthday" class="form-label">Birthday<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
@@ -76,7 +83,8 @@
                                     <div class="col-3">
                                         <label for="inputAddress2" class="form-label">Address 2</label>
                                         <input type="text" class="form-control" id="inputAddress2" name="address2"
-                                               placeholder="Apartment, studio, or floor" value="{{$student->address2}}">
+                                               placeholder="Apartment, studio, or floor"
+                                               value="{{$student->address2}}">
                                     </div>
                                     <div class="col-2">
                                         <label for="inputCity" class="form-label">City<sup><i
@@ -94,9 +102,11 @@
                                         <label for="inputState" class="form-label">Gender<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
                                         <select id="inputState" class="form-select" name="gender" required>
-                                            <option value="Male" {{($student->gender == 'Male')?'selected':null}}>Male
+                                            <option value="Male" {{($student->gender == 'Male')?'selected':null}}>
+                                                Male
                                             </option>
-                                            <option value="Female" {{($student->gender == 'Female')?'selected':null}}>
+                                            <option
+                                                value="Female" {{($student->gender == 'Female')?'selected':null}}>
                                                 Female
                                             </option>
                                         </select>
@@ -104,7 +114,8 @@
                                     <div class="col-2">
                                         <label for="inputNationality" class="form-label">Nationality<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="text" class="form-control" id="inputNationality" name="nationality"
+                                        <input type="text" class="form-control" id="inputNationality"
+                                               name="nationality"
                                                placeholder="e.g. Bangladeshi, German, ..." required
                                                value="{{$student->nationality}}">
                                     </div>
@@ -130,7 +141,8 @@
                                             <option value="AB-" {{($student->blood_type == 'AB-')?'selected':null}}>
                                                 AB-
                                             </option>
-                                            <option value="Other" {{($student->blood_type == 'Other')?'selected':null}}>
+                                            <option
+                                                value="Other" {{($student->blood_type == 'Other')?'selected':null}}>
                                                 Other
                                             </option>
                                         </select>
@@ -139,7 +151,8 @@
                                         <label for="inputReligion" class="form-label">Religion<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
                                         <select id="inputReligion" class="form-select" name="religion" required>
-                                            <option {{($student->religion == 'Islam')?'selected':null}}>Islam</option>
+                                            <option {{($student->religion == 'Islam')?'selected':null}}>Islam
+                                            </option>
                                             <option {{($student->religion == 'Hinduism')?'selected':null}}>Hinduism
                                             </option>
                                             <option {{($student->religion == 'Christianity')?'selected':null}}>
@@ -149,7 +162,8 @@
                                             </option>
                                             <option {{($student->religion == 'Judaism')?'selected':null}}>Judaism
                                             </option>
-                                            <option {{($student->religion == 'Other')?'selected':null}}>Other</option>
+                                            <option {{($student->religion == 'Other')?'selected':null}}>Other
+                                            </option>
                                         </select>
                                     </div>
                                     <div class="col-3">
@@ -186,8 +200,10 @@
                                     <div class="col-4">
                                         <label for="inputFatherName" class="form-label">Father Name<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="text" class="form-control" id="inputFatherName" name="father_name"
-                                               placeholder="Father Name" required value="{{$parent_info->father_name}}">
+                                        <input type="text" class="form-control" id="inputFatherName"
+                                               name="father_name"
+                                               placeholder="Father Name" required
+                                               value="{{$parent_info->father_name}}">
                                     </div>
                                     <div class="col-3">
                                         <label for="inputFatherPhone" class="form-label">Father's Phone<sup><i
@@ -199,8 +215,10 @@
                                     <div class="col-4">
                                         <label for="inputMotherName" class="form-label">Mother Name<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="text" class="form-control" id="inputMotherName" name="mother_name"
-                                               placeholder="Mother Name" required value="{{$parent_info->mother_name}}">
+                                        <input type="text" class="form-control" id="inputMotherName"
+                                               name="mother_name"
+                                               placeholder="Mother Name" required
+                                               value="{{$parent_info->mother_name}}">
                                     </div>
                                     <div class="col-3">
                                         <label for="inputMotherPhone" class="form-label">Mother's Phone<sup><i

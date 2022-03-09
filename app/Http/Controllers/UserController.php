@@ -292,8 +292,7 @@ class UserController extends Controller
         $totalGeral = 0;
         foreach ($payment as $value):
             $total = $value->tuition + $value->sdf + $value->hot_lunch + $value->enrollment;
-            $desconto = $total - ($total / 100 * $value->percentage_discount);
-            $value->total_geral_linha = number_format($total - $desconto, 2);
+            $value->total_geral_linha = number_format($total - ($total / 100 * $value->percentage_discount), 2);
             $totalGeral += $value->total_geral_linha;
         endforeach;
 

@@ -146,13 +146,11 @@
 
         $(document).ready(function () {
 
-            $("#student_id").blur(function () {
+            $("#student_id").change(function () {
 
                 var student = $(this).val();
                 var _token = $('input[name="_token"]').val();
-                if (student > 0) {
-                    $("#search").submit();
-                }
+                $("#search").submit();
 
             });
 

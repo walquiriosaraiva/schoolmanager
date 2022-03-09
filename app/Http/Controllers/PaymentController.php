@@ -250,6 +250,7 @@ class PaymentController extends Controller
                 if ($countRegister === 0) {
                     $paymentConfirmEstudent['bank_return_data_id'] = $request->get('bank_return_data_id');
                     $paymentConfirmEstudent['student_id'] = $request->get('student_id');
+                    $paymentConfirmEstudent['payment_confirm_estudent_id'] = $id;
 
                     PaymentConfirmEstudent::create($paymentConfirmEstudent);
 
@@ -400,16 +401,22 @@ class PaymentController extends Controller
 
     public function destroy($id)
     {
-        $destroyData = Payment::findOrFail($id);
+        if (PaymentConfirmEstudent::where('payment_confirm_estudent_id', '=', $id)->count() === 0):
+            $destroyData = Payment::findOrFail($id);
 
-        if ($destroyData->delete()):
-            return redirect()->route('payment.index')
-                ->withInput()
-                ->with(['success' => 'Pagamento excluido com sucesso']);
+            if ($destroyData->delete()):
+                return redirect()->route('payment.index')
+                    ->withInput()
+                    ->with(['success' => 'Pagamento excluido com sucesso']);
+            else:
+                return redirect()->route('payment.index')
+                    ->withInput()
+                    ->with(['error' => 'Erro ao tentar excluir o pagamento']);
+            endif;
         else:
             return redirect()->route('payment.index')
                 ->withInput()
-                ->with(['error' => 'Erro ao tentar excluir o pagamento']);
+                ->with(['error' => 'Erro ao tentar excluir o pagamento, pois já está vinculado e não pode ser excluído']);
         endif;
     }
 

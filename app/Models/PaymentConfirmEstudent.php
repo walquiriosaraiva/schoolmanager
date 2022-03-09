@@ -20,7 +20,8 @@ class PaymentConfirmEstudent extends Model
      */
     protected $fillable = [
         'bank_return_data_id',
-        'student_id'
+        'student_id',
+        'payment_confirm_estudent_id'
     ];
 
     protected $dates = ['created_at', 'updated_at'];
