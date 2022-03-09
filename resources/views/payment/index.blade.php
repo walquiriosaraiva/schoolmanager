@@ -76,7 +76,7 @@
                                             <td>{{$object->enrollment}}</td>
                                             <td>{{$object->type_of_payment}}</td>
                                             <td>{{$object->status_payment}}</td>
-                                            <td>{{$object->percentage_discount}}</td>
+                                            <td>{{$object->percentage_discount}} %</td>
                                             <td>{{$object->totalLinha}}</td>
                                             @if (Auth::user()->role == "admin")
                                                 <td>

@@ -17,7 +17,7 @@ class PaymentRepository
 
                 Payment::create([
                     'student_id' => $student_id,
-                    'due_date' => $date->addMonths($i),
+                    'due_date' => $date->addMonths($i - 1),
                     'tuition' => $request['tuition'],
                     'sdf' => $request['sdf'],
                     'hot_lunch' => $request['hot_lunch'],
