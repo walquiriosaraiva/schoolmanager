@@ -123,8 +123,6 @@ class UserRepository implements UserInterface
                     'view notices'
                 );
 
-                $this->createPDF($student->id);
-
             });
         } catch (\Exception $e) {
             throw new \Exception('Failed to create Student. ' . $e->getMessage());
@@ -160,7 +158,6 @@ class UserRepository implements UserInterface
                 $promotionRepository = new PromotionRepository();
                 $promotionRepository->update($request, $request['student_id']);
 
-                $this->createPDF($request['student_id']);
             });
         } catch (\Exception $e) {
             throw new \Exception('Failed to update Student. ' . $e->getMessage());
