@@ -36,8 +36,7 @@
                                     <form class="row g-3" action="{{route('payment.search')}}" method="POST"
                                           name="search" id="search">
                                         @csrf
-                                        <label for="student_id" class="form-label">Student:<sup><i
-                                                    class="bi bi-asterisk text-primary"></i></sup></label>
+                                        <label for="student_id" class="form-label">Student:</label>
                                         <select class="form-select"
                                                 id="student_id" name="student_id" required>
                                             <option value="">Please select a student</option>

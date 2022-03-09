@@ -122,6 +122,8 @@ With the improved Docker setup, you will get:
     :/# composer dump-autoload
     :/# php artisan view:clear
     :/# php artisan route:clear
+    :/# chmod -Rf ug+rwx storage
+    :/# chown www-data. -Rf storage    
     ```
 
     Then exit from the container.
