@@ -206,7 +206,6 @@ class UserController extends Controller
             }
 
             $this->userRepository->updateStudent($request->toArray());
-            $this->createPDF(['id' => $request->get('student_id')]);
             return back()->with('status', 'Student update was successful!');
         } catch (\Exception $e) {
             return back()->withError($e->getMessage());
