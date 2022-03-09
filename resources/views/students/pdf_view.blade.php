@@ -106,7 +106,9 @@
             <table class="table-bordered table-sm" style="margin-top: 10px;">
                 <tr>
                     <td>
-                        {{ $result->session_name }}
+                        @isset($result)
+                            {{ $result->session_name }}
+                        @endisset
                     </td>
                     <td>
                         Valor total anual devido: {{ number_format($totalGeral, 2) }}
