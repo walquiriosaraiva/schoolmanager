@@ -208,20 +208,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/students/pdf/{id}', [PaymentController::class, 'createPDF'])->name('payment.pdf');
 
     Route::get('students/pdf-contract/{id}', [UserController::class, 'createPDF'])->name('students.pdf-contract');
-    /*
-    Route::get('students/pdf-contract/{id}', function ($id) {
-        $image = Storage::disk('local')->allFiles("students/{$id}/pdf");
-        $path = count($image) ? current($image) : "";
-        $response = null;
 
-        if (!empty($path)) {
-            $response = Response::make(Storage::get($path), 200);
-            $response->header('content-type', Storage::mimeType($path));
-        }
-
-        return $response;
-    })->name('students.pdf-contract');
-    */
+    Route::get('users', [UserController::class, 'index'])->name('users.index');
+    Route::post('users/search', [UserController::class, 'index'])->name('users.search');
+    Route::post('users', [UserController::class, 'storeUser'])->name('users.store');
+    Route::get('users/create', function () {
+        return view('users.create');
+    })->name('users.create');
+    Route::get('users/{user}/edit', [UserController::class, 'findUser'])->name('users.edit');
+    Route::get('users/{user}', [UserController::class, 'showUser'])->name('users.show');
+    Route::put('users/{user}', [UserController::class, 'updateUser'])->name('users.update');
+    Route::delete('users/{user}', [UserController::class, 'destroyUser'])->name('users.destroy');
 
 
 });

@@ -92,11 +92,11 @@
                     @foreach ($payment as $object)
                         <tr>
                             <td>{{$object->due_date->format('d/m/Y')}}</td>
-                            <td>{{$object->tuition}}</td>
-                            <td>{{$object->sdf}}</td>
-                            <td>{{$object->hot_lunch}}</td>
-                            <td>{{$object->enrollment}}</td>
-                            <td>{{$object->total_geral_linha}}</td>
+                            <td>{{$object->tuition ? number_format($object->tuition, 2, ',', '.') : ''}}</td>
+                            <td>{{$object->sdf ? number_format($object->sdf, 2, ',', '.') : ''}}</td>
+                            <td>{{$object->hot_lunch ? number_format($object->hot_lunch, 2, ',', '.') : ''}}</td>
+                            <td>{{$object->enrollment ? number_format($object->enrollment, 2, ',', '.') : ''}}</td>
+                            <td>{{number_format($object->total_geral_linha, 2, ',', '.')}}</td>
                         </tr>
                     @endforeach
                 @endisset
@@ -111,7 +111,7 @@
                         @endisset
                     </td>
                     <td>
-                        Valor total anual devido: {{ number_format($totalGeral, 2) }}
+                        Valor total anual devido: {{ number_format($totalGeral, 2, ',', '.') }}
                     </td>
                 </tr>
             </table>

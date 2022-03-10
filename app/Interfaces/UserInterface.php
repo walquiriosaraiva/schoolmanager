@@ -2,7 +2,8 @@
 
 namespace App\Interfaces;
 
-interface UserInterface {
+interface UserInterface
+{
     public function createTeacher($request);
 
     public function updateTeacher($request);
@@ -24,4 +25,12 @@ interface UserInterface {
     public function getAllTeachers();
 
     public function changePassword($new_password);
+
+    public function storeUser($request);
+
+    public function findUser($id);
+
+    public function destroyUser($id);
+
+    public function updateUser($request, $id);
 }

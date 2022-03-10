@@ -161,6 +161,9 @@
                        href="{{url('academics/settings')}}"><i class="bi bi-tools"></i> <span
                             class="ms-1 d-inline d-sm-none d-md-none d-xl-inline">Academic</span></a>
                 </li>
+
+
+
             @endif
             @if (!session()->has('browse_session_id') && Auth::user()->role == "admin")
                 <li class="nav-item">

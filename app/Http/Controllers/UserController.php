@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Payment;
 use App\Models\User;
 use App\Repositories\PaymentRepository;
+use App\Repositories\StudentAcademicInfoRepository;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use App\Traits\SchoolSession;
@@ -291,8 +294,8 @@ class UserController extends Controller
         $totalGeral = 0;
         foreach ($payment as $value):
             $total = $value->tuition + $value->sdf + $value->hot_lunch + $value->enrollment;
-            $value->total_geral_linha = number_format($total - ($total / 100 * $value->percentage_discount), 2);
-            $totalGeral += $value->total_geral_linha;
+            $value->total_geral_linha = $total - ($total / 100 * $value->percentage_discount);
+            $totalGeral += $total - ($total / 100 * $value->percentage_discount);
         endforeach;
 
         $pdf = PDF::loadView('students.pdf_view', compact('result', 'page_html', 'payment', 'totalGeral'));
@@ -311,4 +314,74 @@ class UserController extends Controller
         return $response;
 
     }
+
+    public function index(Request $request)
+    {
+        $data = $request->all();
+        $role = 0;
+        if (isset($data['role']) && $data['role']):
+            $role = $data['role'];
+            $users = User::where('role', '=', $role)->get();
+        else:
+            $users = User::all();
+        endif;
+
+        $roles = ['admin' => 'Admin', 'student' => 'Student', 'teacher' => 'Teacher'];
+
+        return view('users.index', compact('users', 'roles', 'role'));
+    }
+
+    public function create()
+    {
+        return view('users.create');
+    }
+
+    public function storeUser(Request $request)
+    {
+
+        try {
+            $this->userRepository->storeUser($request->toArray());
+            return back()->with('status', 'User create was successful!');
+        } catch (\Exception $e) {
+            return back()->withError($e->getMessage());
+        }
+
+    }
+
+    public function findUser($id)
+    {
+        $user = $this->userRepository->findUser($id);
+
+        return view('users.edit', compact('user'));
+    }
+
+    public function updateUser(Request $request, $id)
+    {
+        try {
+            $this->userRepository->updateUser($request->toArray(), $id);
+
+            return back()->with('status', 'User update was successful!');
+        } catch (\Exception $e) {
+            return back()->withError($e->getMessage());
+        }
+    }
+
+    public function showUser($id)
+    {
+        $user = $this->userRepository->findUser($id);
+
+        return view('users.profile', compact('user'));
+    }
+
+    public function destroyUser($id)
+    {
+        try {
+            $this->userRepository->destroyUser($id);
+            return back()->with('status', 'User delete was successful!');
+        } catch (\Exception $e) {
+            return back()->withError($e->getMessage());
+        }
+
+    }
+
 }

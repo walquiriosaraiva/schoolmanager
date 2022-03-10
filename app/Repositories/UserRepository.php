@@ -59,7 +59,7 @@ class UserRepository implements UserInterface
                     'view routines',
                     'view syllabi',
                     'view events',
-                    'view notices',
+                    'view notices'
                 );
             });
         } catch (\Exception $e) {
@@ -257,5 +257,124 @@ class UserRepository implements UserInterface
         } catch (\Exception $e) {
             throw new \Exception('Failed to change password. ' . $e->getMessage());
         }
+    }
+
+    public function storeUser($request)
+    {
+        try {
+            DB::transaction(function () use ($request) {
+                $user = User::create([
+                    'first_name' => $request['first_name'],
+                    'last_name' => $request['last_name'],
+                    'email' => $request['email'],
+                    'gender' => $request['gender'],
+                    'nationality' => $request['nationality'],
+                    'phone' => $request['phone'],
+                    'address' => $request['address'],
+                    'address2' => $request['address2'],
+                    'city' => $request['city'],
+                    'zip' => $request['zip'],
+                    'photo' => (!empty($request['photo'])) ? $this->convert($request['photo']) : null,
+                    'role' => 'admin',
+                    'password' => Hash::make($request['password']),
+                ]);
+
+                $user->givePermissionTo(
+                    'create school sessions',
+                    'update browse by session',
+                    'create semesters',
+                    'edit semesters',
+                    'assign teachers',
+                    'create courses',
+                    'view courses',
+                    'edit courses',
+                    'create classes',
+                    'view classes',
+                    'edit classes',
+                    'create sections',
+                    'view sections',
+                    'edit sections',
+                    'create exams',
+                    'view exams',
+                    'create exams rule',
+                    'edit exams rule',
+                    'delete exams rule',
+                    'view exams rule',
+                    'create routines',
+                    'view routines',
+                    'edit routines',
+                    'delete routines',
+                    'view marks',
+                    'view academic settings',
+                    'update marks submission window',
+                    'create users',
+                    'edit users',
+                    'view users',
+                    'promote students',
+                    'update attendances type',
+                    'view attendances',
+                    'take attendances',
+                    'create grading systems',
+                    'view grading systems',
+                    'edit grading systems',
+                    'delete grading systems',
+                    'create grading systems rule',
+                    'view grading systems rule',
+                    'edit grading systems rule',
+                    'delete grading systems rule',
+                    'create notices',
+                    'view notices',
+                    'edit notices',
+                    'delete notices',
+                    'create events',
+                    'view events',
+                    'edit events',
+                    'delete events',
+                    'create syllabi',
+                    'view syllabi',
+                    'edit syllabi',
+                    'delete syllabi',
+                    'view assignments'
+                );
+            });
+        } catch (\Exception $e) {
+            throw new \Exception('Failed to create User. ' . $e->getMessage());
+        }
+    }
+
+    public function findUser($id)
+    {
+        try {
+            return User::where('id', $id)->where('role', 'admin')->first();
+        } catch (\Exception $e) {
+            throw new \Exception('Failed to get admin. ' . $e->getMessage());
+        }
+    }
+
+    public function updateUser($request, $id)
+    {
+        try {
+            DB::transaction(function () use ($request) {
+                User::where('id', $request['id'])->update([
+                    'first_name' => $request['first_name'],
+                    'last_name' => $request['last_name'],
+                    'email' => $request['email'],
+                    'gender' => $request['gender'],
+                    'nationality' => $request['nationality'],
+                    'phone' => $request['phone'],
+                    'address' => $request['address'],
+                    'address2' => $request['address2'],
+                    'city' => $request['city'],
+                    'zip' => $request['zip'],
+                ]);
+            });
+        } catch (\Exception $e) {
+            throw new \Exception('Failed to update User. ' . $e->getMessage());
+        }
+    }
+
+    public function destroyUser($id)
+    {
+        dd($id);
     }
 }
