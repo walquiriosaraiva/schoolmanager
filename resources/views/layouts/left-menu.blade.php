@@ -163,6 +163,26 @@
                 </li>
 
 
+                {{--
+                                <li class="nav-item">
+                                    <a type="button" href="#users-submenu" data-bs-toggle="collapse"
+                                       class="d-flex nav-link {{ request()->is('users*')? 'active' : '' }}"><i
+                                            class="bi bi-person-lines-fill"></i> <span
+                                            class="ms-2 d-inline d-sm-none d-md-none d-xl-inline">Users</span>
+                                        <i class="ms-auto d-inline d-sm-none d-md-none d-xl-inline bi bi-chevron-down"></i>
+                                    </a>
+                                    <ul class="nav collapse {{ request()->is('users*')? 'show' : 'hide' }} bg-white"
+                                        id="users-submenu">
+                                        <li class="nav-item w-100" {{ request()->routeIs('users.show')? 'style="font-weight:bold;"' : '' }}>
+                                            <a class="nav-link" href="{{url('users')}}"><i
+                                                    class="bi bi-person-video2 me-2"></i> View Users</a></li>
+                                        @if (!session()->has('browse_session_id') && Auth::user()->role == "admin")
+                                            <li class="nav-item w-100" {{ request()->routeIs('users.create')? 'style="font-weight:bold;"' : '' }}>
+                                                <a class="nav-link" href="{{route('users.create')}}"><i
+                                                        class="bi bi-person-plus me-2"></i> Add User</a></li>
+                                        @endif
+                                    </ul>
+                                </li>--}}
 
             @endif
             @if (!session()->has('browse_session_id') && Auth::user()->role == "admin")

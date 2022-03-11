@@ -69,7 +69,7 @@
                                     @foreach ($result as $object)
                                         <tr>
                                             <td>{{$object->first_name . ' ' . $object->last_name}}</td>
-                                            <td>{{$object->due_date->format('d/m/Y')}}</td>
+                                            <td>{{$object->due_date ? $object->due_date->format('d/m/Y') : ''}}</td>
                                             <td>{{$object->tuition ? number_format($object->tuition, 2, ',', '.') : ''}}</td>
                                             <td>{{$object->sdf ? number_format($object->sdf, 2, ',', '.') : ''}}</td>
                                             <td>{{$object->hot_lunch ? number_format($object->hot_lunch, 2, ',', '.') : ''}}</td>
@@ -77,7 +77,7 @@
                                             <td>{{$object->type_of_payment}}</td>
                                             <td>{{$object->status_payment}}</td>
                                             <td>{{$object->percentage_discount}} %</td>
-                                            <td>{{number_format($object->totalLinha, 2, ',', '.')}}</td>
+                                            <td>{{$object->totalLinha ? number_format($object->totalLinha, 2, ',', '.') : ''}}</td>
                                             @if (Auth::user()->role == "admin")
                                                 <td>
                                                     <div class="btn-group" role="group">
