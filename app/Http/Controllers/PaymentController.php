@@ -129,7 +129,8 @@ class PaymentController extends Controller
 
         foreach ($result as $key => $value):
             $total = $value->tuition + $value->sdf + $value->hot_lunch + $value->enrollment;
-            $value->totalLinha = number_format($total - ($total / 100 * $value->percentage_discount), 2);
+            $totaLinha = $total - ($total / 100 * $value->percentage_discount);
+            $value->totalLinha = number_format($totaLinha, 2, ',', '.');
         endforeach;
 
         return view('payment.index', compact('result', 'students', 'student_id'));
