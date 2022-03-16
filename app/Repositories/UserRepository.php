@@ -123,6 +123,13 @@ class UserRepository implements UserInterface
                     'view notices'
                 );
 
+                $id = $student->id;
+
+                if (isset($request['transcript']) && $request['transcript']) {
+                    $transcript = $request['transcript']->getClientOriginalName();
+                    Storage::put('students/' . $id . '/documents/' . 'transcript.' . pathinfo($transcript, PATHINFO_EXTENSION), $request['transcript']->getContent());
+                }
+
             });
         } catch (\Exception $e) {
             throw new \Exception('Failed to create Student. ' . $e->getMessage());
@@ -157,6 +164,17 @@ class UserRepository implements UserInterface
                 // Update Student's ID card number
                 $promotionRepository = new PromotionRepository();
                 $promotionRepository->update($request, $request['student_id']);
+
+                $id = $request['student_id'];
+                if (isset($request['transcript']) && $request['transcript']) {
+                    $transcript = $request['transcript']->getClientOriginalName();
+                    Storage::put('students/' . $id . '/documents/' . 'transcript.' . pathinfo($transcript, PATHINFO_EXTENSION), $request['transcript']->getContent());
+                }
+
+                if (isset($request['student_identidade']) && $request['student_identidade']) {
+                    $studentIdentidade = $request['student_identidade']->getClientOriginalName();
+                    Storage::put('students/' . $id . '/documents/' . 'student_identidade.' . pathinfo($studentIdentidade, PATHINFO_EXTENSION), $request['student_identidade']->getContent());
+                }
 
             });
         } catch (\Exception $e) {

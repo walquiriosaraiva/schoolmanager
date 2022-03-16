@@ -36,7 +36,8 @@ class StudentStoreRequest extends FormRequest
             'zip' => 'required|string',
             'photo' => 'nullable|string',
             'birthday' => 'required|date',
-            'religion' => 'required|string',
+            'ethnicity' => 'required|string',
+            'application_grade' => 'required|string',
             'blood_type' => 'required|string',
             'password' => 'required|string|min:8',
             'contract' => 'nullable',
@@ -68,7 +69,15 @@ class StudentStoreRequest extends FormRequest
             'type_of_payment' => 'nullable',
             'status_payment' => 'nullable',
             'contract_duration' => 'required',
-            'student_id' => 'nullable'
+            'student_id' => 'nullable',
+
+            // Documents
+            'transcript' => 'nullable',
+            'student_identidade' => 'nullable',
+            'vaccination_record' => 'nullable',
+            'digital_student_photo' => 'nullable',
+            'primary_parent_passport' => 'nullable',
+            'outros_documentos' => 'nullable',
         ];
     }
 }

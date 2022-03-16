@@ -31,7 +31,8 @@
                                             <div class="px-5 pt-2">
                                                 @if (isset($student->photo))
                                                     <img src="{{asset('/storage'.$student->photo)}}"
-                                                         class="rounded-3 card-img-top" alt="Profile photo">
+                                                         class="rounded-3 card-img-top"
+                                                         alt="Profile photo">
                                                 @else
                                                     <img src="{{asset('imgs/profile.png')}}"
                                                          class="rounded-3 card-img-top"
@@ -49,18 +50,285 @@
                                         <input type="hidden" id="photoHiddenInput" name="photo" value="">
                                     </div>
 
-                                    <div class="col-3">
-                                        <label for="inputFirstName" class="form-label">First Name<sup><i
-                                                    class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="text" class="form-control" id="inputFirstName" name="first_name"
-                                               placeholder="First Name" required value="{{$student->first_name}}">
+                                    <div class="row mt-4 g-3">
+                                        <h6>General Information (Informações Gerais):</h6>
+
+                                        <div class="col-4">
+                                            <label for="inputFirstName" class="form-label">First Name<sup><i
+                                                        class="bi bi-asterisk text-primary"></i></sup></label>
+                                            <input type="text" class="form-control" id="inputFirstName"
+                                                   name="first_name"
+                                                   placeholder="First Name" required value="{{$student->first_name}}">
+                                        </div>
+
+                                        <div class="col-4">
+                                            <label for="inputLastName" class="form-label">Last Name<sup><i
+                                                        class="bi bi-asterisk text-primary"></i></sup></label>
+                                            <input type="text" class="form-control" id="inputLastName" name="last_name"
+                                                   placeholder="Last Name" required value="{{$student->last_name}}">
+                                        </div>
+
+                                        <div class="col-4">
+                                            <label for="application_grade" class="form-label">Application Grade (Série a
+                                                ser
+                                                matriculado)<sup><i
+                                                        class="bi bi-asterisk text-primary"></i></sup></label>
+                                            <select id="application_grade" class="form-select" name="application_grade"
+                                                    required>
+                                                <option {{($student->application_grade == '1th')?'selected':null}}>1th
+                                                </option>
+                                                <option {{($student->application_grade == '2th')?'selected':null}}>2th
+                                                </option>
+                                                <option {{($student->application_grade == '3th')?'selected':null}}>3th
+                                                </option>
+                                                <option {{($student->application_grade == '4th')?'selected':null}}>4th
+                                                </option>
+                                                <option {{($student->application_grade == '5th')?'selected':null}}>5th
+                                                </option>
+                                                <option {{($student->application_grade == '6th')?'selected':null}}>6th
+                                                </option>
+                                                <option {{($student->application_grade == '7th')?'selected':null}}>7th
+                                                </option>
+                                                <option {{($student->application_grade == '8th')?'selected':null}}>8th
+                                                </option>
+                                                <option {{($student->application_grade == '9th')?'selected':null}}>9th
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-3">
+                                            <label for="inputBirthday" class="form-label">Birthday<sup><i
+                                                        class="bi bi-asterisk text-primary"></i></sup></label>
+                                            <input type="date" class="form-control" id="inputBirthday" name="birthday"
+                                                   placeholder="Birthday" required value="{{$student->birthday}}">
+                                        </div>
+
+                                        <div class="col-2">
+                                            <label for="inputState" class="form-label">Gender<sup><i
+                                                        class="bi bi-asterisk text-primary"></i></sup></label>
+                                            <select id="inputState" class="form-select" name="gender" required>
+                                                <option value="Male" {{($student->gender == 'Male')?'selected':null}}>
+                                                    Male
+                                                </option>
+                                                <option
+                                                    value="Female" {{($student->gender == 'Female')?'selected':null}}>
+                                                    Female
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <label for="ethnicity" class="form-label">Ethnicity (Etnia)<sup><i
+                                                        class="bi bi-asterisk text-primary"></i></sup></label>
+                                            <select id="ethnicity" class="form-select" name="ethnicity" required>
+                                                <option {{($student->ethnicity == 'Brancos')?'selected':null}}>
+                                                    Brancos
+                                                </option>
+                                                <option {{($student->ethnicity == 'Pardos')?'selected':null}}>
+                                                    Pardos
+                                                </option>
+                                                <option {{($student->ethnicity == 'Pretos')?'selected':null}}>
+                                                    Pretos
+                                                </option>
+                                                <option {{($student->ethnicity == 'Amarelos')?'selected':null}}>
+                                                    Amarelos
+                                                </option>
+                                                <option {{($student->ethnicity == 'Indígenas')?'selected':null}}>
+                                                    Indígenas
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-3">
+                                            <label for="inputAddress" class="form-label">Address<sup><i
+                                                        class="bi bi-asterisk text-primary"></i></sup></label>
+                                            <input type="text" class="form-control" id="inputAddress" name="address"
+                                                   placeholder="634 Main St" required value="{{$student->address}}">
+                                        </div>
+                                        <div class="col-3">
+                                            <label for="inputAddress2" class="form-label">Address 2</label>
+                                            <input type="text" class="form-control" id="inputAddress2" name="address2"
+                                                   placeholder="Apartment, studio, or floor"
+                                                   value="{{$student->address2}}">
+                                        </div>
+                                        <div class="col-2">
+                                            <label for="inputCity" class="form-label">City<sup><i
+                                                        class="bi bi-asterisk text-primary"></i></sup></label>
+                                            <input type="text" class="form-control" id="inputCity" name="city"
+                                                   placeholder="Dhaka..." required value="{{$student->city}}">
+                                        </div>
+                                        <div class="col-2">
+                                            <label for="inputZip" class="form-label">Zip<sup><i
+                                                        class="bi bi-asterisk text-primary"></i></sup></label>
+                                            <input type="text" class="form-control" id="inputZip" name="zip" required
+                                                   value="{{$student->zip}}">
+                                        </div>
+
+                                        <div class="col-2">
+                                            <label for="inputBloodType" class="form-label">BloodType<sup><i
+                                                        class="bi bi-asterisk text-primary"></i></sup></label>
+                                            <select id="inputBloodType" class="form-select" name="blood_type" required>
+                                                <option value="A+" {{($student->blood_type == 'A+')?'selected':null}}>A+
+                                                </option>
+                                                <option value="A-" {{($student->blood_type == 'A-')?'selected':null}}>A-
+                                                </option>
+                                                <option value="B+" {{($student->blood_type == 'B+')?'selected':null}}>B+
+                                                </option>
+                                                <option value="B-" {{($student->blood_type == 'B-')?'selected':null}}>B-
+                                                </option>
+                                                <option value="O+" {{($student->blood_type == 'O+')?'selected':null}}>O+
+                                                </option>
+                                                <option value="O-" {{($student->blood_type == 'O-')?'selected':null}}>O-
+                                                </option>
+                                                <option value="AB+" {{($student->blood_type == 'AB+')?'selected':null}}>
+                                                    AB+
+                                                </option>
+                                                <option value="AB-" {{($student->blood_type == 'AB-')?'selected':null}}>
+                                                    AB-
+                                                </option>
+                                                <option
+                                                    value="Other" {{($student->blood_type == 'Other')?'selected':null}}>
+                                                    Other
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-3">
+                                            <label for="inputPhone" class="form-label">Phone<sup><i
+                                                        class="bi bi-asterisk text-primary"></i></sup></label>
+                                            <input type="text" class="form-control" id="inputPhone" name="phone"
+                                                   placeholder="+880 01......" required value="{{$student->phone}}">
+                                        </div>
+
+                                        <div class="col-3">
+                                            <label for="inputIdCardNumber" class="form-label">Id Card Number<sup><i
+                                                        class="bi bi-asterisk text-primary"></i></sup></label>
+                                            <input type="text" class="form-control" id="inputIdCardNumber"
+                                                   name="id_card_number"
+                                                   placeholder="e.g. 2021-03-01-02-01 (Year Semester Class Section Roll)"
+                                                   required value="{{$promotion_info->id_card_number}}">
+                                        </div>
+
                                     </div>
-                                    <div class="col-3">
-                                        <label for="inputLastName" class="form-label">Last Name<sup><i
-                                                    class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="text" class="form-control" id="inputLastName" name="last_name"
-                                               placeholder="Last Name" required value="{{$student->last_name}}">
+
+                                    <div class="row mt-4 g-3">
+                                        <h6>Listar medicamentos:</h6>
+                                        <div class="col-12">
+                                            <label for="medicines" class="form-label">Medicamentos<sup><i
+                                                        class="bi bi-asterisk text-primary"></i></sup></label>
+                                            <input type="text" class="form-control" id="medicines" name="medicines"
+                                                   placeholder="alergias, condições médicas ou, se não aplicável"
+                                                   required value="{{$student->medicines}}">
+                                        </div>
                                     </div>
+
+                                    <div class="row mt-4 g-3">
+                                        <h6>Additional Fields (Campos Adicionais)</h6>
+
+                                        <div class="col-5">
+                                            <label for="date_to_start_school" class="form-label">Date to Start School
+                                                (Data
+                                                para início na escola)<sup><i
+                                                        class="bi bi-asterisk text-primary"></i></sup></label>
+                                            <input type="date" class="form-control" id="date_to_start_school"
+                                                   name="date_to_start_school"
+                                                   placeholder="Birthday" required
+                                                   value="{{$student->date_to_start_school}}">
+                                        </div>
+
+                                        <div class="col-2">
+                                            <label for="inputNationality" class="form-label">Nationality<sup><i
+                                                        class="bi bi-asterisk text-primary"></i></sup></label>
+                                            <input type="text" class="form-control" id="inputNationality"
+                                                   name="nationality"
+                                                   placeholder="e.g. Bangladeshi, German, ..." required
+                                                   value="{{$student->nationality}}">
+                                        </div>
+
+                                        <div class="col-5">
+                                            <label for="language_spoken_at_home" class="form-label">Language spoken at
+                                                home (Idioma falado em casa)<sup><i
+                                                        class="bi bi-asterisk text-primary"></i></sup></label>
+                                            <input type="text" class="form-control" id="language_spoken_at_home"
+                                                   name="language_spoken_at_home"
+                                                   placeholder="Language spoken at home"
+                                                   required value="{{$student->language_spoken_at_home}}">
+                                        </div>
+
+                                        <div class="col-5">
+                                            <label for="last_school_attended" class="form-label">Last School Attended
+                                                (Última escola frequentada)<sup><i
+                                                        class="bi bi-asterisk text-primary"></i></sup></label>
+                                            <input type="text" class="form-control" id="last_school_attended"
+                                                   name="last_school_attended"
+                                                   placeholder="Last School Attended"
+                                                   required value="{{$student->last_school_attended}}">
+                                        </div>
+
+                                        <div class="col-5">
+                                            <label for="last_grade_enrolled" class="form-label">Last Grade Enrolled
+                                                (Última série matriculado)<sup><i
+                                                        class="bi bi-asterisk text-primary"></i></sup></label>
+                                            <input type="text" class="form-control" id="last_grade_enrolled"
+                                                   name="last_grade_enrolled"
+                                                   placeholder="Last Grade Enrolled"
+                                                   required value="{{$student->last_grade_enrolled}}">
+                                        </div>
+
+                                        <div class="col-12">
+                                            <label for="last_grade_enrolled" class="form-label">IEP (if not required,
+                                                mark NO) (Plano de educação individualizado - Se não for
+                                                necessário, marcar "NO")</label>
+
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="iep"
+                                                       id="attendance_type_yes"
+                                                       {{($student->iep == 'yes')?'checked="checked"':null}} value="yes">
+                                                <label class="form-check-label" for="attendance_type_yes">
+                                                    Yes
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="iep"
+                                                       id="attendance_type_no"
+                                                       {{($student->iep == 'no')?'checked="checked"':null}} value="no">
+                                                <label class="form-check-label" for="attendance_type_no">
+                                                    No
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <label for="last_grade_enrolled" class="form-label">Special Classroom Needs
+                                                (if not required, mark NO) (Necessidades Especiais em
+                                                Sala de Aula - Se não for necessário, marcar "NO")</label>
+
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio"
+                                                       name="special_classroom_needs"
+                                                       id="special_classroom_needs_yes"
+                                                       {{($student->special_classroom_needs == 'yes')?'checked="checked"':null}} value="yes">
+                                                <label class="form-check-label" for="special_classroom_needs_yes">
+                                                    Yes
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio"
+                                                       name="special_classroom_needs"
+                                                       id="special_classroom_needs_no"
+                                                       {{($student->special_classroom_needs == 'no')?'checked="checked"':null}} value="no">
+                                                <label class="form-check-label" for="special_classroom_needs_no">
+                                                    No
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                                <div class="row mt-4 g-3">
+                                    <h6>Parents' Information</h6>
                                     <div class="col-3">
                                         <label for="inputEmail4" class="form-label">Email<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
@@ -68,121 +336,6 @@
                                                value="{{$student->email}}">
                                     </div>
 
-                                    <div class="col-3">
-                                        <label for="inputBirthday" class="form-label">Birthday<sup><i
-                                                    class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="date" class="form-control" id="inputBirthday" name="birthday"
-                                               placeholder="Birthday" required value="{{$student->birthday}}">
-                                    </div>
-                                    <div class="col-3">
-                                        <label for="inputAddress" class="form-label">Address<sup><i
-                                                    class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="text" class="form-control" id="inputAddress" name="address"
-                                               placeholder="634 Main St" required value="{{$student->address}}">
-                                    </div>
-                                    <div class="col-3">
-                                        <label for="inputAddress2" class="form-label">Address 2</label>
-                                        <input type="text" class="form-control" id="inputAddress2" name="address2"
-                                               placeholder="Apartment, studio, or floor"
-                                               value="{{$student->address2}}">
-                                    </div>
-                                    <div class="col-2">
-                                        <label for="inputCity" class="form-label">City<sup><i
-                                                    class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="text" class="form-control" id="inputCity" name="city"
-                                               placeholder="Dhaka..." required value="{{$student->city}}">
-                                    </div>
-                                    <div class="col-2">
-                                        <label for="inputZip" class="form-label">Zip<sup><i
-                                                    class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="text" class="form-control" id="inputZip" name="zip" required
-                                               value="{{$student->zip}}">
-                                    </div>
-                                    <div class="col-2">
-                                        <label for="inputState" class="form-label">Gender<sup><i
-                                                    class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <select id="inputState" class="form-select" name="gender" required>
-                                            <option value="Male" {{($student->gender == 'Male')?'selected':null}}>
-                                                Male
-                                            </option>
-                                            <option
-                                                value="Female" {{($student->gender == 'Female')?'selected':null}}>
-                                                Female
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div class="col-2">
-                                        <label for="inputNationality" class="form-label">Nationality<sup><i
-                                                    class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="text" class="form-control" id="inputNationality"
-                                               name="nationality"
-                                               placeholder="e.g. Bangladeshi, German, ..." required
-                                               value="{{$student->nationality}}">
-                                    </div>
-                                    <div class="col-2">
-                                        <label for="inputBloodType" class="form-label">BloodType<sup><i
-                                                    class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <select id="inputBloodType" class="form-select" name="blood_type" required>
-                                            <option value="A+" {{($student->blood_type == 'A+')?'selected':null}}>A+
-                                            </option>
-                                            <option value="A-" {{($student->blood_type == 'A-')?'selected':null}}>A-
-                                            </option>
-                                            <option value="B+" {{($student->blood_type == 'B+')?'selected':null}}>B+
-                                            </option>
-                                            <option value="B-" {{($student->blood_type == 'B-')?'selected':null}}>B-
-                                            </option>
-                                            <option value="O+" {{($student->blood_type == 'O+')?'selected':null}}>O+
-                                            </option>
-                                            <option value="O-" {{($student->blood_type == 'O-')?'selected':null}}>O-
-                                            </option>
-                                            <option value="AB+" {{($student->blood_type == 'AB+')?'selected':null}}>
-                                                AB+
-                                            </option>
-                                            <option value="AB-" {{($student->blood_type == 'AB-')?'selected':null}}>
-                                                AB-
-                                            </option>
-                                            <option
-                                                value="Other" {{($student->blood_type == 'Other')?'selected':null}}>
-                                                Other
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div class="col-2">
-                                        <label for="inputReligion" class="form-label">Religion<sup><i
-                                                    class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <select id="inputReligion" class="form-select" name="religion" required>
-                                            <option {{($student->religion == 'Islam')?'selected':null}}>Islam
-                                            </option>
-                                            <option {{($student->religion == 'Hinduism')?'selected':null}}>Hinduism
-                                            </option>
-                                            <option {{($student->religion == 'Christianity')?'selected':null}}>
-                                                Christianity
-                                            </option>
-                                            <option {{($student->religion == 'Buddhism')?'selected':null}}>Buddhism
-                                            </option>
-                                            <option {{($student->religion == 'Judaism')?'selected':null}}>Judaism
-                                            </option>
-                                            <option {{($student->religion == 'Other')?'selected':null}}>Other
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div class="col-3">
-                                        <label for="inputPhone" class="form-label">Phone<sup><i
-                                                    class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="text" class="form-control" id="inputPhone" name="phone"
-                                               placeholder="+880 01......" required value="{{$student->phone}}">
-                                    </div>
-                                    <div class="col-3">
-                                        <label for="inputIdCardNumber" class="form-label">Id Card Number<sup><i
-                                                    class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="text" class="form-control" id="inputIdCardNumber"
-                                               name="id_card_number"
-                                               placeholder="e.g. 2021-03-01-02-01 (Year Semester Class Section Roll)"
-                                               required value="{{$promotion_info->id_card_number}}">
-                                    </div>
-                                </div>
-                                <div class="row mt-4 g-3">
-                                    <h6>Parents' Information</h6>
                                     <div class="col-md-3">
                                         <label for="cpf" class="form-label">CPF</label>
                                         <input type="text" class="form-control" id="cpf"
@@ -235,6 +388,52 @@
                                                value="{{$parent_info->parent_address}}">
                                     </div>
 
+                                </div>
+
+                                <div class="row mt-4 g-3">
+                                    <h6>Anexar documentos (PDF ou fotos)</h6>
+
+                                    <div class="col-md-6">
+                                        <label for="transcript" class="form-label">Transcript (Histórico
+                                            Escolar)</label>
+                                        <input type="file" name="transcript" class="form-control" id="transcript">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="student_identidade" class="form-label">Students ID (Identidade do
+                                            aluno)</label>
+                                        <input type="file" name="student_identidade" class="form-control"
+                                               id="student_identidade">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="vaccination_record" class="form-label">Vaccination Record (Cartão de
+                                            vacina)</label>
+                                        <input type="file" name="vaccination_record" class="form-control"
+                                               id="vaccination_record">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="digital_student_photo" class="form-label">Digital Student Photo
+                                            (Foto
+                                            digital do aluno)</label>
+                                        <input type="file" name="digital_student_photo" class="form-control"
+                                               id="digital_student_photo">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="primary_parent_passport" class="form-label">Primary Parent Passport
+                                            (Passaporte primário do pai/responsável</label>
+                                        <input type="file" name="primary_parent_passport" class="form-control"
+                                               id="primary_parent_passport">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="outros_documentos" class="form-label">Outros documentos (pode
+                                            compactar mais documentos e anexar aqui)</label>
+                                        <input type="file" name="outros_documentos" class="form-control"
+                                               id="outros_documentos">
+                                    </div>
                                 </div>
 
                                 <div class="row mt-4 g-3">
