@@ -27,6 +27,15 @@
                             <form class="row g-3" action="{{route('school.student.create')}}" method="POST"
                                   enctype="multipart/form-data">
                                 @csrf
+                                <input type="hidden" name="id_card_number" id="id_card_number" value="{{$idCard}}">
+
+                                <div class="col-md-3">
+                                    <label for="formFile" class="form-label">Photo</label>
+                                    <input class="form-control" type="file" id="formFile" onchange="previewFile()">
+                                    <div id="previewPhoto"></div>
+                                    <input type="hidden" id="photoHiddenInput" name="photo" value="">
+                                </div>
+
                                 <div class="row g-3">
                                     <div class="col-md-3">
                                         <label for="inputFirstName" class="form-label">First Name<sup><i
@@ -34,59 +43,63 @@
                                         <input type="text" class="form-control" id="inputFirstName" name="first_name"
                                                placeholder="First Name" required value="{{old('first_name')}}">
                                     </div>
+
                                     <div class="col-md-3">
                                         <label for="inputLastName" class="form-label">Last Name<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
                                         <input type="text" class="form-control" id="inputLastName" name="last_name"
                                                placeholder="Last Name" required value="{{old('last_name')}}">
                                     </div>
+
                                     <div class="col-md-6">
                                         <label for="inputEmail4" class="form-label">Email<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
                                         <input type="email" class="form-control" id="inputEmail4" name="email" required
                                                value="{{old('email')}}">
                                     </div>
+
                                     <div class="col-md-6">
                                         <label for="inputPassword4" class="form-label">Password<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
                                         <input type="password" class="form-control" id="inputPassword4" name="password"
                                                required>
                                     </div>
-                                    <div class="col-md-3">
-                                        <label for="formFile" class="form-label">Photo</label>
-                                        <input class="form-control" type="file" id="formFile" onchange="previewFile()">
-                                        <div id="previewPhoto"></div>
-                                        <input type="hidden" id="photoHiddenInput" name="photo" value="">
+
+                                    <div class="col-4">
+                                        <label for="application_grade" class="form-label">Application Grade (Série a
+                                            ser
+                                            matriculado)<sup><i
+                                                    class="bi bi-asterisk text-primary"></i></sup></label>
+                                        <select id="application_grade" class="form-select" name="application_grade"
+                                                required>
+                                            <option value='1th'>1th
+                                            </option>
+                                            <option value='2th'>2th
+                                            </option>
+                                            <option value='3th'>3th
+                                            </option>
+                                            <option value='4th'>4th
+                                            </option>
+                                            <option value='5th'>5th
+                                            </option>
+                                            <option value='6th'>6th
+                                            </option>
+                                            <option value='7th'>7th
+                                            </option>
+                                            <option value='8th'>8th
+                                            </option>
+                                            <option value='9th'>9th
+                                            </option>
+                                        </select>
                                     </div>
+
                                     <div class="col-md-3">
                                         <label for="inputBirthday" class="form-label">Birthday<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
                                         <input type="date" class="form-control" id="inputBirthday" name="birthday"
                                                placeholder="Birthday" required value="{{old('birthday')}}">
                                     </div>
-                                    <div class="col-3-md">
-                                        <label for="inputAddress" class="form-label">Address<sup><i
-                                                    class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="text" class="form-control" id="inputAddress" name="address"
-                                               placeholder="634 Main St" required value="{{old('address')}}">
-                                    </div>
-                                    <div class="col-3-md">
-                                        <label for="inputAddress2" class="form-label">Address 2</label>
-                                        <input type="text" class="form-control" id="inputAddress2" name="address2"
-                                               placeholder="Apartment, studio, or floor" value="{{old('address2')}}">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="inputCity" class="form-label">City<sup><i
-                                                    class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="text" class="form-control" id="inputCity" name="city"
-                                               placeholder="Dhaka..." required value="{{old('city')}}">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="inputZip" class="form-label">Zip<sup><i
-                                                    class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="text" class="form-control" id="inputZip" name="zip" required
-                                               value="{{old('zip')}}">
-                                    </div>
+
                                     <div class="col-md-3">
                                         <label for="inputState" class="form-label">Gender<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
@@ -98,13 +111,56 @@
                                             </option>
                                         </select>
                                     </div>
-                                    <div class="col-md-3">
-                                        <label for="inputNationality" class="form-label">Nationality<sup><i
+
+                                    <div class="col-2">
+                                        <label for="ethnicity" class="form-label">Ethnicity (Etnia)<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="text" class="form-control" id="inputNationality" name="nationality"
-                                               placeholder="e.g. Bangladeshi, German, ..." required
-                                               value="{{old('nationality')}}">
+                                        <select id="ethnicity" class="form-select" name="ethnicity" required>
+                                            <option value='Brancos'>
+                                                Brancos
+                                            </option>
+                                            <option value='Pardos'>
+                                                Pardos
+                                            </option>
+                                            <option value='Pretos'>
+                                                Pretos
+                                            </option>
+                                            <option value='Amarelos'>
+                                                Amarelos
+                                            </option>
+                                            <option value='Indígenas'>
+                                                Indígenas
+                                            </option>
+                                        </select>
                                     </div>
+
+                                    <div class="col-3-md">
+                                        <label for="inputAddress" class="form-label">Address<sup><i
+                                                    class="bi bi-asterisk text-primary"></i></sup></label>
+                                        <input type="text" class="form-control" id="inputAddress" name="address"
+                                               placeholder="634 Main St" required value="{{old('address')}}">
+                                    </div>
+
+                                    <div class="col-3-md">
+                                        <label for="inputAddress2" class="form-label">Address 2</label>
+                                        <input type="text" class="form-control" id="inputAddress2" name="address2"
+                                               placeholder="Apartment, studio, or floor" value="{{old('address2')}}">
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="inputCity" class="form-label">City<sup><i
+                                                    class="bi bi-asterisk text-primary"></i></sup></label>
+                                        <input type="text" class="form-control" id="inputCity" name="city"
+                                               placeholder="Dhaka..." required value="{{old('city')}}">
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="inputZip" class="form-label">Zip<sup><i
+                                                    class="bi bi-asterisk text-primary"></i></sup></label>
+                                        <input type="text" class="form-control" id="inputZip" name="zip" required
+                                               value="{{old('zip')}}">
+                                    </div>
+
                                     <div class="col-md-4">
                                         <label for="inputBloodType" class="form-label">BloodType<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
@@ -120,39 +176,132 @@
                                             <option {{old('blood_type') == 'other' ? 'selected' : ''}}>Other</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
-                                        <label for="inputReligion" class="form-label">Religion<sup><i
-                                                    class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <select id="inputReligion" class="form-select" name="religion" required>
-                                            <option {{old('religion') == 'Islam' ? 'selected' : ''}}>Islam</option>
-                                            <option {{old('religion') == 'Hinduism' ? 'selected' : ''}}>Hinduism
-                                            </option>
-                                            <option {{old('religion') == 'Christianity' ? 'selected' : ''}}>
-                                                Christianity
-                                            </option>
-                                            <option {{old('religion') == 'Buddhism' ? 'selected' : ''}}>Buddhism
-                                            </option>
-                                            <option {{old('religion') == 'Judaism' ? 'selected' : ''}}>Judaism</option>
-                                            <option {{old('religion') == 'Others' ? 'selected' : ''}}>Other</option>
-                                        </select>
-                                    </div>
+
                                     <div class="col-md-4">
                                         <label for="inputPhone" class="form-label">Phone<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
                                         <input type="text" class="form-control" id="inputPhone" name="phone"
                                                placeholder="+880 01......" required value="{{old('phone')}}">
                                     </div>
-                                    <div class="col-5-md">
-                                        <label for="inputIdCardNumber" class="form-label">Id Card Number<sup><i
+                                </div>
+
+                                <div class="row mt-4 g-3">
+                                    <h6>Listar medicamentos:</h6>
+                                    <div class="col-12">
+                                        <label for="medicines" class="form-label">Medicamentos<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="text" class="form-control" id="inputIdCardNumber"
-                                               name="id_card_number"
-                                               placeholder="e.g. 2021-03-01-02-01 (Year Semester Class Section Roll)"
-                                               required value="{{old('id_card_number')}}">
+                                        <input type="text" class="form-control" id="medicines" name="medicines"
+                                               placeholder="alergias, condições médicas ou, se não aplicável"
+                                               required value="{{old('medicines')}}">
                                     </div>
                                 </div>
+
+                                <div class="row mt-4 g-3">
+                                    <h6>Additional Fields (Campos Adicionais)</h6>
+
+                                    <div class="col-5">
+                                        <label for="date_to_start_school" class="form-label">Date to Start School
+                                            (Data
+                                            para início na escola)<sup><i
+                                                    class="bi bi-asterisk text-primary"></i></sup></label>
+                                        <input type="date" class="form-control" id="date_to_start_school"
+                                               name="date_to_start_school"
+                                               placeholder="Birthday" required
+                                               value="{{old('date_to_start_school')}}">
+                                    </div>
+
+                                    <div class="col-2">
+                                        <label for="inputNationality" class="form-label">Nationality<sup><i
+                                                    class="bi bi-asterisk text-primary"></i></sup></label>
+                                        <input type="text" class="form-control" id="inputNationality"
+                                               name="nationality"
+                                               placeholder="e.g. Bangladeshi, German, ..." required
+                                               value="{{old('nationality')}}">
+                                    </div>
+
+                                    <div class="col-5">
+                                        <label for="language_spoken_at_home" class="form-label">Language spoken at
+                                            home (Idioma falado em casa)<sup><i
+                                                    class="bi bi-asterisk text-primary"></i></sup></label>
+                                        <input type="text" class="form-control" id="language_spoken_at_home"
+                                               name="language_spoken_at_home"
+                                               placeholder="Language spoken at home"
+                                               required value="{{old('language_spoken_at_home')}}">
+                                    </div>
+
+                                    <div class="col-5">
+                                        <label for="last_school_attended" class="form-label">Last School Attended
+                                            (Última escola frequentada)<sup><i
+                                                    class="bi bi-asterisk text-primary"></i></sup></label>
+                                        <input type="text" class="form-control" id="last_school_attended"
+                                               name="last_school_attended"
+                                               placeholder="Last School Attended"
+                                               required value="{{old('last_school_attended')}}">
+                                    </div>
+
+                                    <div class="col-5">
+                                        <label for="last_grade_enrolled" class="form-label">Last Grade Enrolled
+                                            (Última série matriculado)<sup><i
+                                                    class="bi bi-asterisk text-primary"></i></sup></label>
+                                        <input type="text" class="form-control" id="last_grade_enrolled"
+                                               name="last_grade_enrolled"
+                                               placeholder="Last Grade Enrolled"
+                                               required value="{{old('last_grade_enrolled')}}">
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="last_grade_enrolled" class="form-label">IEP (if not required,
+                                            mark NO) (Plano de educação individualizado - Se não for
+                                            necessário, marcar "NO")</label>
+
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="iep"
+                                                   id="attendance_type_yes"
+                                                   value="yes">
+                                            <label class="form-check-label" for="attendance_type_yes">
+                                                Yes
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="iep"
+                                                   id="attendance_type_no"
+                                                   value="no">
+                                            <label class="form-check-label" for="attendance_type_no">
+                                                No
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="last_grade_enrolled" class="form-label">Special Classroom Needs
+                                            (if not required, mark NO) (Necessidades Especiais em
+                                            Sala de Aula - Se não for necessário, marcar "NO")</label>
+
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio"
+                                                   name="special_classroom_needs"
+                                                   id="special_classroom_needs_yes"
+                                                   value="yes">
+                                            <label class="form-check-label" for="special_classroom_needs_yes">
+                                                Yes
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio"
+                                                   name="special_classroom_needs"
+                                                   id="special_classroom_needs_no"
+                                                   value="no">
+                                            <label class="form-check-label" for="special_classroom_needs_no">
+                                                No
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                </div>
+
                                 <div class="row mt-4 g-3">
                                     <h6>Parents' Information</h6>
+
                                     <div class="col-md-3">
                                         <label for="cpf" class="form-label">CPF</label>
                                         <input type="text" class="form-control" id="cpf"
@@ -167,39 +316,44 @@
                                                placeholder="Passport"
                                                value="{{old('passport')}}">
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-4">
                                         <label for="inputFatherName" class="form-label">Father Name<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="text" class="form-control" id="inputFatherName" name="father_name"
-                                               placeholder="Father Name" required value="{{old('father_name')}}">
+                                        <input type="text" class="form-control" id="inputFatherName"
+                                               name="father_name"
+                                               placeholder="Father Name" required
+                                               value="{{old('father_name')}}">
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-3">
                                         <label for="inputFatherPhone" class="form-label">Father's Phone<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
                                         <input type="text" class="form-control" id="inputFatherPhone"
                                                name="father_phone" placeholder="+880 01......" required
                                                value="{{old('father_phone')}}">
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-4">
                                         <label for="inputMotherName" class="form-label">Mother Name<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="text" class="form-control" id="inputMotherName" name="mother_name"
-                                               placeholder="Mother Name" required value="{{old('mother_name')}}">
+                                        <input type="text" class="form-control" id="inputMotherName"
+                                               name="mother_name"
+                                               placeholder="Mother Name" required
+                                               value="{{old('mother_name')}}">
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-3">
                                         <label for="inputMotherPhone" class="form-label">Mother's Phone<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
                                         <input type="text" class="form-control" id="inputMotherPhone"
                                                name="mother_phone" placeholder="+880 01......" required
-                                               value="{{old('mother_name')}}">
+                                               value="{{old('mother_phone')}}">
                                     </div>
-                                    <div class="col-4-md">
+                                    <div class="col-6">
                                         <label for="inputParentAddress" class="form-label">Address<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
                                         <input type="text" class="form-control" id="inputParentAddress"
                                                name="parent_address" placeholder="634 Main St" required
                                                value="{{old('parent_address')}}">
                                     </div>
+
                                 </div>
                                 <div class="row mt-4 g-3">
                                     <h6>Academic Information</h6>
@@ -288,6 +442,52 @@
                                                     value="{{$key}}">{{$value}}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-4 g-3">
+                                    <h6>Anexar documentos (PDF ou fotos)</h6>
+
+                                    <div class="col-md-6">
+                                        <label for="transcript" class="form-label">Transcript (Histórico
+                                            Escolar)</label>
+                                        <input type="file" name="transcript" class="form-control" id="transcript">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="student_identidade" class="form-label">Students ID (Identidade do
+                                            aluno)</label>
+                                        <input type="file" name="student_identidade" class="form-control"
+                                               id="student_identidade">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="vaccination_record" class="form-label">Vaccination Record (Cartão de
+                                            vacina)</label>
+                                        <input type="file" name="vaccination_record" class="form-control"
+                                               id="vaccination_record">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="digital_student_photo" class="form-label">Digital Student Photo
+                                            (Foto
+                                            digital do aluno)</label>
+                                        <input type="file" name="digital_student_photo" class="form-control"
+                                               id="digital_student_photo">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="primary_parent_passport" class="form-label">Primary Parent Passport
+                                            (Passaporte primário do pai/responsável</label>
+                                        <input type="file" name="primary_parent_passport" class="form-control"
+                                               id="primary_parent_passport">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="outros_documentos" class="form-label">Outros documentos (pode
+                                            compactar mais documentos e anexar aqui)</label>
+                                        <input type="file" name="outros_documentos" class="form-control"
+                                               id="outros_documentos">
                                     </div>
                                 </div>
 

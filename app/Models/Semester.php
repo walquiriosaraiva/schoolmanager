@@ -9,5 +9,7 @@ class Semester extends Model
 {
     use HasFactory;
 
+    protected $dates = ['start_date', 'end_date'];
+
     protected $fillable = ['semester_name', 'start_date', 'end_date', 'session_id'];
 }

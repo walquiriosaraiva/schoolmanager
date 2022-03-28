@@ -88,7 +88,15 @@ class UserRepository implements UserInterface
                     'zip' => $request['zip'],
                     'photo' => (!empty($request['photo'])) ? $this->convert($request['photo']) : null,
                     'birthday' => $request['birthday'],
-                    'religion' => $request['religion'],
+                    'application_grade' => $request['application_grade'],
+                    'date_to_start_school' => $request['date_to_start_school'],
+                    'language_spoken_at_home' => $request['language_spoken_at_home'],
+                    'last_school_attended' => $request['last_school_attended'],
+                    'last_grade_enrolled' => $request['last_grade_enrolled'],
+                    'medicines' => $request['medicines'],
+                    'iep' => $request['iep'],
+                    'scn' => $request['scn'],
+                    'ethnicity' => $request['ethnicity'],
                     'blood_type' => $request['blood_type'],
                     'role' => 'student',
                     'password' => Hash::make($request['password']),
@@ -123,12 +131,7 @@ class UserRepository implements UserInterface
                     'view notices'
                 );
 
-                $id = $student->id;
-
-                if (isset($request['transcript']) && $request['transcript']) {
-                    $transcript = $request['transcript']->getClientOriginalName();
-                    Storage::put('students/' . $id . '/documents/' . 'transcript.' . pathinfo($transcript, PATHINFO_EXTENSION), $request['transcript']->getContent());
-                }
+                $this->saveDocuments($student->id, $request);
 
             });
         } catch (\Exception $e) {
@@ -152,7 +155,15 @@ class UserRepository implements UserInterface
                     'city' => $request['city'],
                     'zip' => $request['zip'],
                     'birthday' => $request['birthday'],
-                    'religion' => $request['religion'],
+                    'application_grade' => $request['application_grade'],
+                    'date_to_start_school' => $request['date_to_start_school'],
+                    'language_spoken_at_home' => $request['language_spoken_at_home'],
+                    'last_school_attended' => $request['last_school_attended'],
+                    'last_grade_enrolled' => $request['last_grade_enrolled'],
+                    'medicines' => $request['medicines'],
+                    'iep' => $request['iep'],
+                    'scn' => $request['scn'],
+                    'ethnicity' => $request['ethnicity'],
                     'blood_type' => $request['blood_type'],
                     'photo' => (!empty($request['photo'])) ? $this->convert($request['photo']) : null,
                 ]);
@@ -165,21 +176,53 @@ class UserRepository implements UserInterface
                 $promotionRepository = new PromotionRepository();
                 $promotionRepository->update($request, $request['student_id']);
 
-                $id = $request['student_id'];
-                if (isset($request['transcript']) && $request['transcript']) {
-                    $transcript = $request['transcript']->getClientOriginalName();
-                    Storage::put('students/' . $id . '/documents/' . 'transcript.' . pathinfo($transcript, PATHINFO_EXTENSION), $request['transcript']->getContent());
-                }
-
-                if (isset($request['student_identidade']) && $request['student_identidade']) {
-                    $studentIdentidade = $request['student_identidade']->getClientOriginalName();
-                    Storage::put('students/' . $id . '/documents/' . 'student_identidade.' . pathinfo($studentIdentidade, PATHINFO_EXTENSION), $request['student_identidade']->getContent());
-                }
+                $this->saveDocuments($request['student_id'], $request);
 
             });
         } catch (\Exception $e) {
             throw new \Exception('Failed to update Student. ' . $e->getMessage());
         }
+    }
+
+    /**
+     * @param $id
+     * @param $request
+     * @return bool
+     */
+    public function saveDocuments($id, $request)
+    {
+
+        if (isset($request['transcript']) && $request['transcript']) {
+            $transcript = $request['transcript']->getClientOriginalName();
+            Storage::put('students/' . $id . '/documents/' . 'transcript.' . pathinfo($transcript, PATHINFO_EXTENSION), $request['transcript']->getContent());
+        }
+
+        if (isset($request['student_identidade']) && $request['student_identidade']) {
+            $studentIdentidade = $request['student_identidade']->getClientOriginalName();
+            Storage::put('students/' . $id . '/documents/' . 'student_identidade.' . pathinfo($studentIdentidade, PATHINFO_EXTENSION), $request['student_identidade']->getContent());
+        }
+
+        if (isset($request['vaccination_record']) && $request['vaccination_record']) {
+            $vaccinationRecord = $request['vaccination_record']->getClientOriginalName();
+            Storage::put('students/' . $id . '/documents/' . 'vaccination_record.' . pathinfo($vaccinationRecord, PATHINFO_EXTENSION), $request['vaccination_record']->getContent());
+        }
+
+        if (isset($request['digital_student_photo']) && $request['digital_student_photo']) {
+            $digitalStudentPhoto = $request['digital_student_photo']->getClientOriginalName();
+            Storage::put('students/' . $id . '/documents/' . 'digital_student_photo.' . pathinfo($digitalStudentPhoto, PATHINFO_EXTENSION), $request['digital_student_photo']->getContent());
+        }
+
+        if (isset($request['primary_parent_passport']) && $request['primary_parent_passport']) {
+            $primaryParentPassport = $request['primary_parent_passport']->getClientOriginalName();
+            Storage::put('students/' . $id . '/documents/' . 'primary_parent_passport.' . pathinfo($primaryParentPassport, PATHINFO_EXTENSION), $request['primary_parent_passport']->getContent());
+        }
+
+        if (isset($request['outros_documentos']) && $request['outros_documentos']) {
+            $outrosDocumentos = $request['outros_documentos']->getClientOriginalName();
+            Storage::put('students/' . $id . '/documents/' . 'outros_documentos.' . pathinfo($outrosDocumentos, PATHINFO_EXTENSION), $request['outros_documentos']->getContent());
+        }
+
+        return true;
     }
 
     public function updateTeacher($request)

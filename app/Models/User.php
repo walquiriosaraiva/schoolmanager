@@ -81,4 +81,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Mark::class, 'student_id', 'id');
     }
+
+    public function promotion()
+    {
+        return $this->hasMany(Promotion::class, 'student_id', 'id');
+    }
 }

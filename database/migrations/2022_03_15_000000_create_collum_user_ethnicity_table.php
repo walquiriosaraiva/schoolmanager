@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCollumPaymentConfirmTable extends Migration
+class CreateCollumUserEthnicityTable extends Migration
 {
     /**
      * Run the migrations.
@@ -21,6 +21,8 @@ class CreateCollumPaymentConfirmTable extends Migration
             $table->string('last_school_attended')->nullable();
             $table->string('last_grade_enrolled')->nullable();
             $table->text('medicines')->nullable();
+            $table->string('iep')->nullable();
+            $table->string('scn')->nullable();
         });
 
     }

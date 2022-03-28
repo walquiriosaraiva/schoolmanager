@@ -51,7 +51,7 @@
                                     @break
                                 @endif
                             @endforeach
-                            <div class="bg-white border shadow-sm p-3 mt-4">
+                            <div class="bg-white border shadow-sm p-3 mt-4" style="width: 120%;">
                                 <table class="table table-responsive">
                                     <thead>
                                     <tr>
@@ -82,6 +82,9 @@
                                             <td>{{formatPhone($student->student->phone)}}</td>
                                             <td>
                                                 <div class="btn-group" role="group">
+                                                    <a href="{{ route('students.pdf-contract', ['id' => $student->student->id]) }}"
+                                                       role="button" class="btn btn-sm btn-outline-info" download><i
+                                                            class="bi bi-eye"></i> Download contract</a>
                                                     <a href="{{route('student.attendance.show', ['id' => $student->student->id])}}"
                                                        role="button" class="btn btn-sm btn-outline-primary"><i
                                                             class="bi bi-eye"></i> Attendance</a>
@@ -93,7 +96,6 @@
                                                            role="button" class="btn btn-sm btn-outline-primary"><i
                                                                 class="bi bi-pen"></i> Edit</a>
                                                     @endcan
-                                                    {{-- <button type="button" class="btn btn-sm btn-primary"><i class="bi bi-trash2"></i> Delete</button> --}}
                                                 </div>
                                             </td>
                                         </tr>

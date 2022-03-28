@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AcademicSetting;
+use App\Models\Course;
 use App\Models\Payment;
+use App\Models\Promotion;
+use App\Models\SchoolClass;
+use App\Models\Section;
+use App\Models\Semester;
 use App\Models\User;
 use App\Repositories\PaymentRepository;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -129,20 +135,32 @@ class UserController extends Controller
             12 => '12 months'
         );
 
+        $current_school_session_id = $this->getSchoolCurrentSession();
+        $latest_school_session = $this->schoolSessionRepository->getLatestSession();
+
+        $objSemester = Semester::where('session_id', '=', $current_school_session_id)->first();
+        $objClass = SchoolClass::where('session_id', '=', $current_school_session_id)->first();
+
+        $ano = substr($latest_school_session->session_name, 0, 4);
+        $semester = $objSemester->start_date->format('m');
+        $class = str_pad($objClass->id, 2, "0", STR_PAD_LEFT);
+        $sessionRoll1 = str_pad($current_school_session_id, 2, "0", STR_PAD_LEFT);
+        $sessionRoll2 = str_pad($current_school_session_id, 2, "0", STR_PAD_LEFT);
+        $idCard = $ano . '-' . $semester . '-' . $class . '-' . $sessionRoll1 . '-' . $sessionRoll2;
+
         $data = [
             'current_school_session_id' => $current_school_session_id,
             'school_classes' => $school_classes,
             'months' => $months,
+            'idCard' => $idCard
         ];
 
         return view('students.add', $data);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
      * @param StudentStoreRequest $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function storeStudent(StudentStoreRequest $request)
     {
@@ -189,7 +207,9 @@ class UserController extends Controller
             'months' => $months,
             'payment_info' => $payment_info,
             'paymentCount' => $paymentCount,
+            'id_card_number' => $student->promotion->first()->id_card_number,
         ];
+
         return view('students.edit', $data);
     }
 

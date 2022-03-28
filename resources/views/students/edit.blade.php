@@ -24,6 +24,8 @@
                                   enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="student_id" value="{{$student->id}}">
+                                <input type="hidden" name="id_card_number" id="id_card_number"
+                                       value="{{$id_card_number}}">
                                 <div class="row g-3">
 
                                     <div class="col-sm-5 col-md-3">
@@ -53,7 +55,7 @@
                                     <div class="row mt-4 g-3">
                                         <h6>General Information (Informações Gerais):</h6>
 
-                                        <div class="col-4">
+                                        <div class="col-3">
                                             <label for="inputFirstName" class="form-label">First Name<sup><i
                                                         class="bi bi-asterisk text-primary"></i></sup></label>
                                             <input type="text" class="form-control" id="inputFirstName"
@@ -61,11 +63,19 @@
                                                    placeholder="First Name" required value="{{$student->first_name}}">
                                         </div>
 
-                                        <div class="col-4">
+                                        <div class="col-3">
                                             <label for="inputLastName" class="form-label">Last Name<sup><i
                                                         class="bi bi-asterisk text-primary"></i></sup></label>
                                             <input type="text" class="form-control" id="inputLastName" name="last_name"
                                                    placeholder="Last Name" required value="{{$student->last_name}}">
+                                        </div>
+
+                                        <div class="col-6">
+                                            <label for="inputEmail4" class="form-label">Email<sup><i
+                                                        class="bi bi-asterisk text-primary"></i></sup></label>
+                                            <input type="email" class="form-control" id="inputEmail4" name="email"
+                                                   required
+                                                   value="{{$student->email}}">
                                         </div>
 
                                         <div class="col-4">
@@ -139,13 +149,13 @@
                                             </select>
                                         </div>
 
-                                        <div class="col-3">
+                                        <div class="col-3-md">
                                             <label for="inputAddress" class="form-label">Address<sup><i
                                                         class="bi bi-asterisk text-primary"></i></sup></label>
                                             <input type="text" class="form-control" id="inputAddress" name="address"
                                                    placeholder="634 Main St" required value="{{$student->address}}">
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-3-md">
                                             <label for="inputAddress2" class="form-label">Address 2</label>
                                             <input type="text" class="form-control" id="inputAddress2" name="address2"
                                                    placeholder="Apartment, studio, or floor"
@@ -162,6 +172,17 @@
                                                         class="bi bi-asterisk text-primary"></i></sup></label>
                                             <input type="text" class="form-control" id="inputZip" name="zip" required
                                                    value="{{$student->zip}}">
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="inputNationality" class="form-label">Nationality<sup><i
+                                                        class="bi bi-asterisk text-primary"></i></sup></label>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="inputNationality"
+                                                   name="nationality"
+                                                   required
+                                                   value="{{$student->nationality}}">
                                         </div>
 
                                         <div class="col-2">
@@ -198,15 +219,6 @@
                                                         class="bi bi-asterisk text-primary"></i></sup></label>
                                             <input type="text" class="form-control" id="inputPhone" name="phone"
                                                    placeholder="+880 01......" required value="{{$student->phone}}">
-                                        </div>
-
-                                        <div class="col-3">
-                                            <label for="inputIdCardNumber" class="form-label">Id Card Number<sup><i
-                                                        class="bi bi-asterisk text-primary"></i></sup></label>
-                                            <input type="text" class="form-control" id="inputIdCardNumber"
-                                                   name="id_card_number"
-                                                   placeholder="e.g. 2021-03-01-02-01 (Year Semester Class Section Roll)"
-                                                   required value="{{$promotion_info->id_card_number}}">
                                         </div>
 
                                     </div>
@@ -305,18 +317,18 @@
 
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio"
-                                                       name="special_classroom_needs"
+                                                       name="scn"
                                                        id="special_classroom_needs_yes"
-                                                       {{($student->special_classroom_needs == 'yes')?'checked="checked"':null}} value="yes">
+                                                       {{($student->scn == 'yes')?'checked="checked"':null}} value="yes">
                                                 <label class="form-check-label" for="special_classroom_needs_yes">
                                                     Yes
                                                 </label>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio"
-                                                       name="special_classroom_needs"
+                                                       name="scn"
                                                        id="special_classroom_needs_no"
-                                                       {{($student->special_classroom_needs == 'no')?'checked="checked"':null}} value="no">
+                                                       {{($student->scn == 'no')?'checked="checked"':null}} value="no">
                                                 <label class="form-check-label" for="special_classroom_needs_no">
                                                     No
                                                 </label>
@@ -329,12 +341,6 @@
                                 </div>
                                 <div class="row mt-4 g-3">
                                     <h6>Parents' Information</h6>
-                                    <div class="col-3">
-                                        <label for="inputEmail4" class="form-label">Email<sup><i
-                                                    class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="email" class="form-control" id="inputEmail4" name="email" required
-                                               value="{{$student->email}}">
-                                    </div>
 
                                     <div class="col-md-3">
                                         <label for="cpf" class="form-label">CPF</label>
