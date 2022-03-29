@@ -142,7 +142,7 @@ class UserController extends Controller
         $objClass = SchoolClass::where('session_id', '=', $current_school_session_id)->first();
 
         $ano = substr($latest_school_session->session_name, 0, 4);
-        $semester = $objSemester->start_date->format('m');
+        $semester = $objSemester->start_date ? $objSemester->start_date->format('m') : date('m');
         $class = str_pad($objClass->id, 2, "0", STR_PAD_LEFT);
         $sessionRoll1 = str_pad($current_school_session_id, 2, "0", STR_PAD_LEFT);
         $sessionRoll2 = str_pad($current_school_session_id, 2, "0", STR_PAD_LEFT);
