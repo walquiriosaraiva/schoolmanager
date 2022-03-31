@@ -41,7 +41,7 @@ class StudentStoreRequest extends FormRequest
             'date_to_start_school' => 'required|string',
             'last_school_attended' => 'required|string',
             'last_grade_enrolled' => 'required|string',
-            'medicines' => 'required|string',
+            'medicines' => 'nullable|string',
             'iep' => 'required|string',
             'scn' => 'required|string',
             'blood_type' => 'required|string',

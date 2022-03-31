@@ -90,6 +90,12 @@
                                             </option>
                                             <option value='9th'>9th
                                             </option>
+                                            <option value='10th'>10th
+                                            </option>
+                                            <option value='11th'>11th
+                                            </option>
+                                            <option value='12th'>12th
+                                            </option>
                                         </select>
                                     </div>
 
@@ -188,11 +194,10 @@
                                 <div class="row mt-4 g-3">
                                     <h6>Listar medicamentos:</h6>
                                     <div class="col-12">
-                                        <label for="medicines" class="form-label">Medicamentos<sup><i
-                                                    class="bi bi-asterisk text-primary"></i></sup></label>
+                                        <label for="medicines" class="form-label">Medicamentos</label>
                                         <input type="text" class="form-control" id="medicines" name="medicines"
                                                placeholder="alergias, condições médicas ou, se não aplicável"
-                                               required value="{{old('medicines')}}">
+                                               value="{{old('medicines')}}">
                                     </div>
                                 </div>
 
@@ -243,14 +248,37 @@
                                         <label for="last_grade_enrolled" class="form-label">Last Grade Enrolled
                                             (Última série matriculado)<sup><i
                                                     class="bi bi-asterisk text-primary"></i></sup></label>
-                                        <input type="text" class="form-control" id="last_grade_enrolled"
-                                               name="last_grade_enrolled"
-                                               placeholder="Last Grade Enrolled"
-                                               required value="{{old('last_grade_enrolled')}}">
+                                        <select id="last_grade_enrolled" class="form-select" name="last_grade_enrolled"
+                                                required>
+                                            <option value='1th'>1th
+                                            </option>
+                                            <option value='2th'>2th
+                                            </option>
+                                            <option value='3th'>3th
+                                            </option>
+                                            <option value='4th'>4th
+                                            </option>
+                                            <option value='5th'>5th
+                                            </option>
+                                            <option value='6th'>6th
+                                            </option>
+                                            <option value='7th'>7th
+                                            </option>
+                                            <option value='8th'>8th
+                                            </option>
+                                            <option value='9th'>9th
+                                            </option>
+                                            <option value='10th'>10th
+                                            </option>
+                                            <option value='11th'>11th
+                                            </option>
+                                            <option value='12th'>12th
+                                            </option>
+                                        </select>
                                     </div>
 
                                     <div class="col-12">
-                                        <label for="last_grade_enrolled" class="form-label">IEP (if not required,
+                                        <label for="attendance_type" class="form-label">IEP (if not required,
                                             mark NO) (Plano de educação individualizado - Se não for
                                             necessário, marcar "NO")</label>
 
@@ -258,7 +286,7 @@
                                             <input class="form-check-input" type="radio" name="iep"
                                                    id="attendance_type_yes"
                                                    value="yes">
-                                            <label class="form-check-label" for="attendance_type_yes">
+                                            <label class="form-check-label" for="attendance_type">
                                                 Yes
                                             </label>
                                         </div>
@@ -266,32 +294,32 @@
                                             <input class="form-check-input" type="radio" name="iep"
                                                    id="attendance_type_no"
                                                    value="no">
-                                            <label class="form-check-label" for="attendance_type_no">
+                                            <label class="form-check-label" for="attendance_type">
                                                 No
                                             </label>
                                         </div>
                                     </div>
 
                                     <div class="col-12">
-                                        <label for="last_grade_enrolled" class="form-label">Special Classroom Needs
+                                        <label for="special_classroom_needs" class="form-label">Special Classroom Needs
                                             (if not required, mark NO) (Necessidades Especiais em
                                             Sala de Aula - Se não for necessário, marcar "NO")</label>
 
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio"
-                                                   name="special_classroom_needs"
+                                                   name="scn"
                                                    id="special_classroom_needs_yes"
                                                    value="yes">
-                                            <label class="form-check-label" for="special_classroom_needs_yes">
+                                            <label class="form-check-label" for="special_classroom_needs">
                                                 Yes
                                             </label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio"
-                                                   name="special_classroom_needs"
+                                                   name="scn"
                                                    id="special_classroom_needs_no"
                                                    value="no">
-                                            <label class="form-check-label" for="special_classroom_needs_no">
+                                            <label class="form-check-label" for="special_classroom_needs">
                                                 No
                                             </label>
                                         </div>

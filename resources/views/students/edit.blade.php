@@ -103,6 +103,13 @@
                                                 </option>
                                                 <option {{($student->application_grade == '9th')?'selected':null}}>9th
                                                 </option>
+                                                <option {{($student->application_grade == '10th')?'selected':null}}>10th
+                                                </option>
+                                                <option {{($student->application_grade == '11th')?'selected':null}}>11th
+                                                </option>
+                                                <option {{($student->application_grade == '12th')?'selected':null}}>12th
+                                                </option>
+
                                             </select>
                                         </div>
 
@@ -226,11 +233,10 @@
                                     <div class="row mt-4 g-3">
                                         <h6>Listar medicamentos:</h6>
                                         <div class="col-12">
-                                            <label for="medicines" class="form-label">Medicamentos<sup><i
-                                                        class="bi bi-asterisk text-primary"></i></sup></label>
+                                            <label for="medicines" class="form-label">Medicamentos</label>
                                             <input type="text" class="form-control" id="medicines" name="medicines"
                                                    placeholder="alergias, condições médicas ou, se não aplicável"
-                                                   required value="{{$student->medicines}}">
+                                                   value="{{$student->medicines}}">
                                         </div>
                                     </div>
 
@@ -281,14 +287,41 @@
                                             <label for="last_grade_enrolled" class="form-label">Last Grade Enrolled
                                                 (Última série matriculado)<sup><i
                                                         class="bi bi-asterisk text-primary"></i></sup></label>
-                                            <input type="text" class="form-control" id="last_grade_enrolled"
-                                                   name="last_grade_enrolled"
-                                                   placeholder="Last Grade Enrolled"
-                                                   required value="{{$student->last_grade_enrolled}}">
+                                            <select id="last_grade_enrolled" class="form-select"
+                                                    name="last_grade_enrolled"
+                                                    required>
+                                                <option {{($student->last_grade_enrolled == '1th')?'selected':null}}>1th
+                                                </option>
+                                                <option {{($student->last_grade_enrolled == '2th')?'selected':null}}>2th
+                                                </option>
+                                                <option {{($student->last_grade_enrolled == '3th')?'selected':null}}>3th
+                                                </option>
+                                                <option {{($student->last_grade_enrolled == '4th')?'selected':null}}>4th
+                                                </option>
+                                                <option {{($student->last_grade_enrolled == '5th')?'selected':null}}>5th
+                                                </option>
+                                                <option {{($student->last_grade_enrolled == '6th')?'selected':null}}>6th
+                                                </option>
+                                                <option {{($student->last_grade_enrolled == '7th')?'selected':null}}>7th
+                                                </option>
+                                                <option {{($student->last_grade_enrolled == '8th')?'selected':null}}>8th
+                                                </option>
+                                                <option {{($student->last_grade_enrolled == '9th')?'selected':null}}>9th
+                                                </option>
+                                                <option {{($student->last_grade_enrolled == '10th')?'selected':null}}>
+                                                    10th
+                                                </option>
+                                                <option {{($student->last_grade_enrolled == '11th')?'selected':null}}>
+                                                    11th
+                                                </option>
+                                                <option {{($student->last_grade_enrolled == '12th')?'selected':null}}>
+                                                    12th
+                                                </option>
+                                            </select>
                                         </div>
 
                                         <div class="col-12">
-                                            <label for="last_grade_enrolled" class="form-label">IEP (if not required,
+                                            <label for="attendance_type" class="form-label">IEP (if not required,
                                                 mark NO) (Plano de educação individualizado - Se não for
                                                 necessário, marcar "NO")</label>
 
@@ -296,7 +329,7 @@
                                                 <input class="form-check-input" type="radio" name="iep"
                                                        id="attendance_type_yes"
                                                        {{($student->iep == 'yes')?'checked="checked"':null}} value="yes">
-                                                <label class="form-check-label" for="attendance_type_yes">
+                                                <label class="form-check-label" for="attendance_type">
                                                     Yes
                                                 </label>
                                             </div>
@@ -304,7 +337,7 @@
                                                 <input class="form-check-input" type="radio" name="iep"
                                                        id="attendance_type_no"
                                                        {{($student->iep == 'no')?'checked="checked"':null}} value="no">
-                                                <label class="form-check-label" for="attendance_type_no">
+                                                <label class="form-check-label" for="attendance_type">
                                                     No
                                                 </label>
                                             </div>
